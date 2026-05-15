@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{layout/layout :: ytShellHead('검색 결과')}"></th:block>
+    <link rel="stylesheet" href="/css/explore-result/explore-result.css" th:href="@{/css/explore-result/explore-result.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script defer src="/js/explore-result/service.js" th:src="@{/js/explore-result/service.js}"></script>
+    <script defer src="/js/explore-result/layout.js" th:src="@{/js/explore-result/layout.js}"></script>
+    <script defer src="/js/explore-result/event.js" th:src="@{/js/explore-result/event.js}"></script>
+</head>
+<body>
+    <div th:replace="~{layout/layout :: ytShellChrome('search')}"></div>
+    <main class="bd-shell__page-content">
+    <div class="main-wrapper">
+
+        <!-- 메인 콘텐츠 -->
+        <main class="main-content" id="section">
+            <!-- 필터 -->
+            <div class="filter-chips">
+                <button class="chip active" data-filter="all">전체</button>
+                <button class="chip" data-filter="profile">프로필</button>
+                <button class="chip" data-filter="gallery">예술관</button>
+                <button class="chip" data-filter="work">작품</button>
+                <div class="sort-filter">
+                    <button class="sort-filter-btn"><span class="sort-filter-text">최신순</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true" style="pointer-events: none; display: inherit;"><path d="M9 3a4 4 0 00-3.874 3H3a1 1 0 000 2h2.126a4.002 4.002 0 007.748 0H21a1 1 0 100-2h-8.126A4 4 0 009 3Zm0 2a2 2 0 110 4 2 2 0 010-4Zm6 8a4 4 0 00-3.874 3H3a1 1 0 000 2h8.126a4.002 4.002 0 007.748 0H21a1 1 0 000-2h-2.126A4 4 0 0015 13Zm0 2a2 2 0 110 4 2 2 0 010-4Z"></path></svg>
+                    </button>
+                    <div class="sort-filter-dropdown off">
+                        <div class="sort-filter-dropdown-item active" data-sort="latest">최신순</div>
+                        <div class="sort-filter-dropdown-item" data-sort="popular">인기순</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 검색 결과 섹션 -->
+            <div class="item-section-renderer" id="searchResults">
+            </div>
+        </main>
+
+    </div>
+
+    <!-- 토스트 -->
+    <div class="toast off" id="toast">
+        <span class="toast-text" id="toastText"></span>
+        <button class="toast-action off" id="toastAction"></button>
+    </div>
+
+    <!-- 모달 - 신고 -->
+    <div class="modal-overlay off" id="reportOverlay">
+        <div class="modal report-modal">
+            <h2 class="report-title">이미지 또는 제목 신고</h2>
+            <div class="report-options">
+                <label class="radio-label">
+                    <input type="radio" name="report-reason" value="SENSITIVE">
+                    <span class="custom-radio"></span>
+                    <span>민감한 콘텐츠</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="report-reason" value="IMPERSONATION">
+                    <span class="custom-radio"></span>
+                    <span>사칭</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="report-reason" value="HARASSMENT">
+                    <span class="custom-radio"></span>
+                    <span>괴롭힘 또는 악의적 행위</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="report-reason" value="COPYRIGHT">
+                    <span class="custom-radio"></span>
+                    <span>저작권 침해</span>
+                </label>
+            </div>
+            <div class="report-actions">
+                <button class="report-cancel-btn" id="reportCancelBtn">취소</button>
+                <button class="report-submit-btn" id="reportSubmitBtn" disabled>신고</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 공유 모달 -->
+    <div class="modal-overlay work-share-modal-overlay" hidden role="dialog" aria-modal="true" aria-label="공유">
+        <div class="work-share-modal">
+            <div class="work-share-modal__header">
+                <div class="work-share-modal__spacer"></div>
+                <h2 class="work-share-modal__title">공유</h2>
+                <button class="work-share-modal__close" type="button" aria-label="닫기">
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line></svg>
+                </button>
+            </div>
+            <div class="work-share-modal__link-row">
+                <input class="work-share-modal__link-input" type="text" readonly="" value="">
+                <button class="work-share-modal__link-copy" type="button">복사</button>
+            </div>
+            <div class="work-share-modal__receiver">
+                <label class="work-share-modal__label">받는 사람:</label>
+                <div class="work-share-modal__receiver-body">
+                    <div class="work-share-modal__chips"></div>
+                    <input class="work-share-modal__search" type="text" placeholder="검색..." autocomplete="off">
+                </div>
+            </div>
+            <div class="work-share-modal__list off"></div>
+            <div class="work-share-modal__footer">
+                <input class="work-share-modal__message" type="text" placeholder="메시지 쓰기..." autocomplete="off">
+                <button class="work-share-modal__send" type="button">보내기</button>
+            </div>
+        </div>
+    </div>
+    </main>
+    <th:block th:replace="~{layout/layout :: ytShellScripts()}"></th:block>
+</body>
+</html>

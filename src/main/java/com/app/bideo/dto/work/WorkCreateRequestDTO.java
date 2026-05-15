@@ -1,0 +1,29 @@
+package com.app.bideo.dto.work;
+
+import lombok.*;
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class WorkCreateRequestDTO {
+    private Long galleryId;
+    private String title;
+    private String category;
+    private String description;
+    private Long price;
+    private String licenseType;
+    private String licenseTerms;
+    private Boolean isTradable;
+    private Boolean allowComment;
+    private Boolean showSimilar;
+    private String linkUrl;
+    private Boolean auctionEnabled;
+    private Long auctionStartingPrice;
+    private Integer auctionDeadlineHours;
+    private List<Long> tagIds;
+    private List<String> tagNames;
+    private List<WorkFileRequestDTO> files;
+}

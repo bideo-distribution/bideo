@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.bideo.mapper.admin.AdminAuctionMapper">
+
+    <select id="selectAuctionList" resultType="com.app.bideo.dto.admin.AdminAuctionListResponseDTO">
+        select
+            a.id,
+            'AUC-' || lpad(a.id::text, 3, '0') as auction_code,
+            w.title as artwork_title,
+            sm.nickname as artist_nickname,
+            a.winner_id,
+            wm.nickname as winner_nickname,
+            a.starting_price as start_price,
+            a.final_price as winning_price,
+            a.bid_count,
+            to_char(a.closing_at, 'YYYY.MM.DD') as end_at,
+            'FINISHED' as status
+        from tbl_auction a
+        join tbl_work w on a.work_id = w.id
+        join tbl_member sm on a.seller_id = sm.id
+        left join tbl_member wm on a.winner_id = wm.id
+        where a.status in ('CLOSED', 'SOLD')
+        <if test="keyword != null and keyword != ''">
+            and (
+                w.title ilike '%' || #{keyword} || '%'
+                or sm.nickname ilike '%' || #{keyword} || '%'
+                or ('AUC-' || lpad(a.id::text, 3, '0')) ilike '%' || #{keyword} || '%'
+            )
+        </if>
+        order by a.id desc
+        limit #{size} offset #{offset}
+    </select>
+
+    <select id="selectAuctionDetail" resultType="com.app.bideo.dto.admin.AdminAuctionDetailResponseDTO">
+        select
+            a.id,
+            'AUC-' || lpad(a.id::text, 3, '0') as auction_code,
+            a.starting_price as start_price,
+            a.bid_increment as bid_unit,
+            a.final_price as winning_price,
+            a.bid_count,
+            (
+                select count(distinct b.member_id)
+                from tbl_bid b
+                where b.auction_id = a.id
+            ) as participant_count,
+            to_char(a.started_at, 'YYYY.MM.DD HH24:MI') as start_at,
+            to_char(a.closing_at, 'YYYY.MM.DD HH24:MI') as end_at,
+            w.title as artwork_title,
+            sm.nickname as artist_nickname,
+            w.category as artwork_category,
+            a.winner_id,
+            wm.nickname as winner_nickname,
+            'FINISHED' as status,
+            a.fee_rate as commission_rate,
+            a.fee_amount as commission_amount,
+            coalesce(s.net_amount, a.settlement_amount) as settlement_amount,
+            p.status as payment_status,
+            s.status as settlement_status
+        from tbl_auction a
+        join tbl_work w on a.work_id = w.id
+        join tbl_member sm on a.seller_id = sm.id
+        left join tbl_member wm on a.winner_id = wm.id
+        left join lateral (
+            select * from tbl_payment p2
+            where p2.auction_id = a.id
+            order by p2.id desc
+            limit 1
+        ) p on true
+        left join lateral (
+            select * from tbl_settlement s2
+            where s2.payment_id = p.id
+            order by s2.id desc
+            limit 1
+        ) s on true
+        where a.id = #{id}
+          and a.status in ('CLOSED', 'SOLD')
+    </select>
+
+    <select id="countAuctions" resultType="int">
+        select count(*)
+        from tbl_auction a
+        join tbl_work w on a.work_id = w.id
+        join tbl_member sm on a.seller_id = sm.id
+        where a.status in ('CLOSED', 'SOLD')
+        <if test="keyword != null and keyword != ''">
+            and (
+                w.title ilike '%' || #{keyword} || '%'
+                or sm.nickname ilike '%' || #{keyword} || '%'
+                or ('AUC-' || lpad(a.id::text, 3, '0')) ilike '%' || #{keyword} || '%'
+            )
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,29 @@
+package com.app.bideo.mapper.interaction;
+
+import com.app.bideo.dto.interaction.CommentResponseDTO;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+@Mapper
+public interface CommentMapper {
+
+    Long selectCommentId(@Param("commentId") Long commentId);
+
+    CommentResponseDTO selectComment(@Param("commentId") Long commentId);
+
+    boolean existsCommentLike(@Param("memberId") Long memberId, @Param("commentId") Long commentId);
+
+    void insertCommentLike(@Param("memberId") Long memberId, @Param("commentId") Long commentId);
+
+    int deleteCommentLike(@Param("memberId") Long memberId, @Param("commentId") Long commentId);
+
+    int increaseCommentLikeCount(@Param("commentId") Long commentId);
+
+    int decreaseCommentLikeCount(@Param("commentId") Long commentId);
+
+    Integer selectCommentLikeCount(@Param("commentId") Long commentId);
+
+    int updateCommentContent(@Param("commentId") Long commentId, @Param("content") String content);
+
+    int softDeleteComment(@Param("commentId") Long commentId);
+}

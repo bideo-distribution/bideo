@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{layout/layout :: ytShellHead('오프라인 저장 동영상')}"></th:block>
+    <link rel="stylesheet" href="/css/common/reset.css" th:href="@{/css/common/reset.css}" />
+    <link rel="stylesheet" href="/css/common/global.css" th:href="@{/css/common/global.css}" />
+    <link rel="stylesheet" href="/css/common/util.css" th:href="@{/css/common/util.css}" />
+    <link rel="stylesheet" href="/css/common/common.css" th:href="@{/css/common/common.css}" />
+    <link rel="stylesheet" href="/css/downloads/downloads.css" th:href="@{/css/downloads/downloads.css}" />
+    <script defer src="/js/downloads/downloads.js" th:src="@{/js/downloads/downloads.js}"></script>
+</head>
+<body>
+    <div th:replace="~{layout/layout :: ytShellChrome('downloads')}"></div>
+    <main class="bd-shell__page-content">
+
+<div id="section" class="Page-Content">
+<div class="Downloads-Page-Contents">
+
+    <!-- ===== 필터 ===== -->
+    <div class="Downloads-Section">
+        <div class="Downloads-Section-Content">
+            <div class="Downloads-Filter-Bar">
+                <button class="Downloads-Filter-Btn Downloads-Filter-Btn--active" data-filter="all">전체</button>
+                <button class="Downloads-Filter-Btn" data-filter="video">작품</button>
+                <button class="Downloads-Filter-Btn" data-filter="contest">공모전</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 콘텐츠 목록 ===== -->
+    <div class="Downloads-Section">
+        <div class="Downloads-Section-Content">
+            <div class="Downloads-Shelf">
+                <div class="Downloads-Shelf-Body">
+
+                    <!-- 셸프 헤더 -->
+                    <div class="Downloads-Shelf-Header">
+                        <h2 class="Downloads-Shelf-Heading">
+                            <div class="Downloads-Shelf-TitleWrap">
+                                <div class="Downloads-Shelf-Title">My bideo</div>
+                                <div class="Downloads-Shelf-Subtitle" id="shelfSubtitle">동영상 1개</div>
+                            </div>
+                        </h2>
+                    </div>
+
+                    <!-- 동영상 목록 (JS에서 동적 렌더링) -->
+                    <div class="Downloads-VideoList-Container">
+                        <div class="Downloads-VideoList" id="downloadsList"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 하단 안내 메시지 ===== -->
+    <div class="Downloads-Section">
+        <div class="Downloads-Section-Content">
+            <div class="Downloads-Message">
+                <span class="Downloads-Message-Text">찜한 동영상과 공모전을 한곳에서 확인할 수 있습니다.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 동영상 없을 때: 빈 상태 프로모 섹션 ===== -->
+    <div class="Downloads-Section" id="downloadsEmptyState" style="display:none;">
+        <div class="Downloads-Section-Content">
+            <div class="Downloads-Empty-State">
+                <div class="Downloads-Empty-Image">
+                    <img draggable="false" alt="" src="https://www.gstatic.com/youtube/img/useredu/downloads_empty_state.png" />
+                </div>
+                <div class="Downloads-Empty-Message">
+                    <span class="Downloads-Empty-Text">찜한 콘텐츠가 여기에 표시됩니다.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+    </main>
+    <th:block th:replace="~{layout/layout :: ytShellScripts()}"></th:block>
+</body>
+</html>

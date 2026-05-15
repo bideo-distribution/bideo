@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.bideo.mapper.admin.AdminMemberMapper">
+
+    <select id="selectMemberList" resultType="com.app.bideo.dto.admin.AdminMemberListResponseDTO">
+        select
+            m.id,
+            m.email,
+            m.nickname,
+            m.real_name,
+            m.role,
+            m.status,
+            m.creator_verified,
+            m.creator_tier,
+            m.follower_count,
+            m.created_datetime as created_at,
+            case
+                when m.creator_verified = true then '작가'
+                else '컬렉터'
+            end as member_type,
+            (
+                select count(*)
+                from tbl_report r
+                where r.target_type = 'MEMBER'
+                  and r.target_id = m.id
+            ) as report_count,
+            (
+                select count(*)
+                from tbl_order o
+                where o.buyer_id = m.id
+                   or o.seller_id = m.id
+            ) as transaction_count
+        from tbl_member m
+        <where>
+            m.deleted_datetime is null
+            <if test="keyword != null and keyword != ''">
+                and (
+                    m.email ilike '%' || #{keyword} || '%'
+                    or m.nickname ilike '%' || #{keyword} || '%'
+                    or m.real_name ilike '%' || #{keyword} || '%'
+                )
+            </if>
+            <if test="role != null and role != ''">
+                and m.role = #{role}
+            </if>
+            <if test="status != null and status != ''">
+                and m.status = #{status}
+            </if>
+            <if test="creatorVerified != null">
+                and m.creator_verified = #{creatorVerified}
+            </if>
+        </where>
+        order by m.created_datetime desc
+        limit #{size} offset #{offset}
+    </select>
+
+    <select id="selectMemberDetail" resultType="com.app.bideo.dto.admin.AdminMemberDetailResponseDTO">
+        select
+            m.id,
+            m.email,
+            m.nickname,
+            m.real_name,
+            m.birth_date,
+            m.bio,
+            m.profile_image,
+            m.role,
+            m.status,
+            m.creator_verified,
+            m.seller_verified,
+            m.creator_tier,
+            m.follower_count,
+            m.following_count,
+            m.gallery_count,
+            m.phone_number as phone,
+            m.last_login_datetime as last_login_at,
+            m.last_activity_datetime as last_activity_at,
+            m.created_datetime as created_at,
+            m.updated_datetime,
+            (
+                select o.provider
+                from tbl_oauth o
+                where o.member_id = m.id
+                limit 1
+            ) as social_provider,
+            case
+                when m.creator_verified = true then '작가'
+                else '컬렉터'
+            end as member_type,
+            m.email_verified,
+            m.phone_verified,
+            (
+                select count(*)
+                from tbl_report r
+                where r.target_type = 'MEMBER'
+                  and r.target_id = m.id
+            ) as report_count,
+            (
+                select count(*)
+                from tbl_payment p
+                where p.buyer_id = m.id
+                  and p.status = 'CANCELLED'
+            ) as failed_payment_count,
+            (
+                select count(*)
+                from tbl_work w
+                where w.member_id = m.id
+                  and w.deleted_datetime is null
+            ) as work_count,
+            (
+                select count(*)
+                from tbl_auction a
+                where a.winner_id = m.id
+                  and a.status = 'SOLD'
+            ) as auction_win_count,
+            (
+                select count(*)
+                from tbl_order o2
+                where o2.seller_id = m.id
+                  and o2.status = 'COMPLETED'
+            ) as sold_count,
+            coalesce((
+                select sum(o3.total_price)
+                from tbl_order o3
+                where o3.seller_id = m.id
+                  and o3.status = 'COMPLETED'
+            ), 0) as total_transaction_amount,
+            (
+                select count(*)
+                from tbl_withdrawal_request wr
+                where wr.member_id = m.id
+                  and wr.status = 'PENDING'
+            ) as pending_withdrawal_count,
+            (
+                select to_char(max(o4.completed_at), 'YYYY.MM.DD HH24:MI')
+                from tbl_order o4
+                where o4.buyer_id = m.id
+                   or o4.seller_id = m.id
+            ) as last_transaction_date,
+            (
+                select count(*)
+                from tbl_payment p
+                where p.buyer_id = m.id
+                  and p.status = 'REFUNDED'
+            ) as refund_count,
+            (
+                select count(*)
+                from tbl_member_restriction mr
+                where mr.member_id = m.id
+            ) as suspension_count
+
+        from tbl_member m
+        where m.id = #{id}
+    </select>
+
+    <update id="updateMemberStatus">
+        update tbl_member
+        set status = #{status},
+            updated_datetime = now()
+        where id = #{id}
+    </update>
+
+    <select id="countMembers" resultType="int">
+        select count(*)
+        from tbl_member m
+        <where>
+            m.deleted_datetime is null
+            <if test="keyword != null and keyword != ''">
+                and (
+                    m.email ilike '%' || #{keyword} || '%'
+                    or m.nickname ilike '%' || #{keyword} || '%'
+                    or m.real_name ilike '%' || #{keyword} || '%'
+                )
+            </if>
+            <if test="role != null and role != ''">
+                and m.role = #{role}
+            </if>
+            <if test="status != null and status != ''">
+                and m.status = #{status}
+            </if>
+            <if test="creatorVerified != null">
+                and m.creator_verified = #{creatorVerified}
+            </if>
+        </where>
+    </select>
+
+</mapper>

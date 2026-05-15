@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{layout/layout :: ytShellHead('공모전 등록')}"></th:block>
+    <link rel="stylesheet" href="/css/common/reset.css" th:href="@{/css/common/reset.css}" />
+    <link rel="stylesheet" href="/css/common/global.css" th:href="@{/css/common/global.css}" />
+    <link rel="stylesheet" href="/css/common/util.css" th:href="@{/css/common/util.css}" />
+    <link rel="stylesheet" href="/css/common/common.css" th:href="@{/css/common/common.css}" />
+    <link rel="stylesheet" href="/css/contest/contest-register-page.css" th:href="@{/css/contest/contest-register-page.css}" />
+    <script defer src="/js/contest/contest-register.js" th:src="@{/js/contest/contest-register.js}"></script>
+    <meta th:if="${contestId}" name="contestId" th:content="${contestId}" />
+</head>
+<body>
+    <div th:replace="~{layout/layout :: ytShellChrome('contest')}"></div>
+    <main class="bd-shell__page-content">
+
+<div id="section" class="Page-Content">
+<div class="Register-Page">
+
+    <!-- ===== 페이지 타이틀 + 액션 버튼 ===== -->
+    <div class="Register-Page-Header">
+        <h1 class="Register-Page-Title">공모전 등록</h1>
+        <div class="Register-ActionBar-Buttons">
+            <button class="Register-Button-Outline" id="editContestBtn">수정</button>
+            <button class="Register-Button-Filled" id="registerContestBtn">등록</button>
+        </div>
+    </div>
+
+    <!-- ===== 구분선 ===== -->
+    <div class="Register-Divider"></div>
+
+    <!-- ===== 폼 콘텐츠 ===== -->
+    <div class="Register-Form">
+
+        <!-- 배너 이미지 -->
+        <section class="Register-Section">
+            <h2 class="Register-Section-Title">배너 이미지</h2>
+            <p class="Register-Section-Desc">이 이미지가 공모전 상세 페이지 상단에 표시됩니다.</p>
+            <div class="Register-Upload-Row">
+                <div class="Register-Banner-Preview" id="bannerPreview">
+                    <div class="Register-Banner-Placeholder" id="bannerPlaceholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 0 24 24" width="48"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="#606060"/></svg>
+                    </div>
+                    <img class="Register-Banner-Image" id="bannerImage" alt="" src="" style="display:none;" />
+                </div>
+                <div class="Register-Upload-Info">
+                    <p class="Register-Upload-Guide">모든 기기에 최적화된 이미지가 표시되도록 2048x1152픽셀 이상, 6MB 이하의 이미지를 사용하세요.</p>
+                    <input type="file" id="bannerFileInput" accept="image/*" hidden />
+                    <div class="Register-Button-Group">
+                        <button class="Register-Button-Outline" id="bannerUploadBtn">업로드</button>
+                        <button class="Register-Button-Outline" id="bannerChangeBtn" style="display:none;">변경</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 공모전 제목 -->
+        <section class="Register-Section">
+            <h2 class="Register-Section-Title">공모전 제목</h2>
+            <p class="Register-Section-Desc">공모전을 잘 나타내는 제목을 입력하세요. 변경된 제목은 공모전 목록과 상세 페이지에 표시됩니다. 제목은 14일 내에 2회 변경할 수 있습니다.</p>
+            <div class="Register-Input-Wrap">
+                <input class="Register-Input" type="text" id="titleInput" placeholder="공모전 제목을 입력하세요" />
+            </div>
+        </section>
+
+        <!-- 주최자 -->
+        <section class="Register-Section">
+            <h2 class="Register-Section-Title">주최자</h2>
+            <p class="Register-Section-Desc">공모전을 주최하는 기관 또는 이름을 입력하세요.</p>
+            <div class="Register-Input-Wrap">
+                <input class="Register-Input" type="text" id="organizerInput" placeholder="주최자를 입력하세요" />
+            </div>
+        </section>
+
+        <!-- 카테고리 -->
+        <section class="Register-Section">
+            <h2 class="Register-Section-Title">카테고리</h2>
+            <p class="Register-Section-Desc">공모전의 카테고리를 선택하세요.</p>
+            <div class="Register-Input-Wrap">
+                <select class="Register-Input" id="categoryInput">
+                    <option value="">선택하세요</option>
+                    <option value="영상">영상</option>
+                    <option value="음악">음악</option>
+                    <option value="디자인">디자인</option>
+                    <option value="사진">사진</option>
+                    <option value="기타">기타</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- 접수 기간 -->
+        <section class="Register-Section">
+            <h2 class="Register-Section-Title">접수 기간</h2>
+            <p class="Register-Section-Desc">공모전 참가 접수 시작일과 마감일을 설정하세요. 설정된 기간 동안만 참가 신청이 가능합니다.</p>
+            <div class="Register-Date-Row">
+                <div class="Register-Input-Wrap Register-Input-Wrap--labeled">
+                    <label class="Register-Input-Label">시작일</label>
+                    <input class="Register-Input" type="date" id="startDate" />
+                </div>
+                <span class="Register-Date-Separator">~</span>
+                <div class="Register-Input-Wrap Register-Input-Wrap--labeled">
+                    <label class="Register-Input-Label">마감일</label>
+                    <input class="Register-Input" type="date" id="endDate" />
+                </div>
+            </div>
+        </section>
+
+        <!-- 결과 발표일 -->
+        <section class="Register-Section">
+            <h2 class="Register-Section-Title">결과 발표일</h2>
+            <p class="Register-Section-Desc">심사 완료 후 수상자를 발표할 날짜를 설정하세요. 발표일은 공모전 상세 페이지에 표시됩니다.</p>
+            <div class="Register-Input-Wrap Register-Input-Wrap--labeled">
+                <label class="Register-Input-Label">발표일</label>
+                <input class="Register-Input" type="date" id="announceDate" />
+            </div>
+        </section>
+
+        <!-- 상금 정보 -->
+        <section class="Register-Section">
+            <h2 class="Register-Section-Title">상금 정보</h2>
+            <p class="Register-Section-Desc">공모전 상금 정보를 입력하세요.</p>
+            <div class="Register-Input-Wrap">
+                <input class="Register-Input" type="text" id="prizeInfoInput" placeholder="예: 총 500만원" />
+            </div>
+        </section>
+
+        <!-- 참가비 -->
+        <section class="Register-Section">
+            <h2 class="Register-Section-Title">참가비</h2>
+            <p class="Register-Section-Desc">참가비가 있는 경우 금액을 입력하세요. 무료인 경우 비워두세요.</p>
+            <div class="Register-Input-Wrap">
+                <input class="Register-Input" type="number" id="priceInput" placeholder="0" />
+            </div>
+        </section>
+
+        <!-- 공모전 설명 -->
+        <section class="Register-Section">
+            <h2 class="Register-Section-Title">설명</h2>
+            <div class="Register-Textarea-Wrap">
+                <textarea class="Register-Textarea" rows="6" id="descriptionInput" placeholder="참가자에게 공모전에 대해 설명해 주세요. 이 설명은 공모전의 정보 섹션 및 검색결과 등에 표시됩니다."></textarea>
+            </div>
+        </section>
+
+        <!-- 태그 -->
+        <section class="Register-Section">
+            <h2 class="Register-Section-Title">태그</h2>
+            <p class="Register-Section-Desc">#을 붙여 입력한 뒤 Enter를 누르면 태그가 생성됩니다.</p>
+            <div class="Register-Tag-Wrap" id="tagWrap">
+                <input class="Register-Tag-Input" type="text" id="tagInput" placeholder="#태그 입력 후 Enter" />
+            </div>
+        </section>
+
+
+    </div>
+
+    <!-- 삭제 버튼 (하단) -->
+    <div class="Register-Delete-Section">
+        <button class="Register-Button-Delete">삭제</button>
+    </div>
+
+</div>
+</div>
+
+    </main>
+    <th:block th:replace="~{layout/layout :: ytShellScripts()}"></th:block>
+</body>
+</html>

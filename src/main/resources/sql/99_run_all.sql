@@ -1,0 +1,56 @@
+-- ----------------------------------------------------------
+-- Bideo 전체 스키마 실행 스크립트
+-- 사용법: psql -U bideo -d bideo -f 99_run_all.sql
+-- ----------------------------------------------------------
+
+\encoding UTF8
+\set ON_ERROR_STOP on
+\ir tbl_member.sql
+\ir tbl_tag.sql
+\ir tbl_badge.sql
+\ir tbl_message_room.sql
+\ir tbl_faq.sql
+\ir tbl_oauth.sql
+\ir tbl_member_tag.sql
+\ir tbl_member_badge.sql
+\ir tbl_notification_setting.sql
+\ir tbl_work.sql
+\ir tbl_work_view.sql
+\ir tbl_follow.sql
+\ir tbl_block.sql
+\ir tbl_card.sql
+\ir tbl_search_history.sql
+\ir tbl_inquiry.sql
+\ir tbl_work_file.sql
+\ir tbl_work_tag.sql
+\ir tbl_gallery.sql
+\ir tbl_gallery_view.sql
+\ir tbl_contest.sql
+\ir tbl_work_like.sql
+\ir tbl_gallery_like.sql
+\ir tbl_bookmark.sql
+\ir tbl_comment.sql
+\ir tbl_comment_like.sql
+\ir tbl_hide.sql
+\ir tbl_report.sql
+\ir tbl_member_restriction.sql
+\ir tbl_notification.sql
+\ir tbl_message_room_member.sql
+\ir tbl_message.sql
+\ir tbl_message_like.sql
+\ir tbl_display_control.sql
+\ir tbl_curator_setting.sql
+\ir tbl_gallery_tag.sql
+\ir tbl_gallery_work.sql
+\ir tbl_contest_tag.sql
+\ir tbl_contest_entry.sql
+\ir tbl_auction.sql
+\ir tbl_bid.sql
+\ir tbl_auction_wishlist.sql
+\ir tbl_order.sql
+\ir tbl_payment.sql
+\ir tbl_settlement.sql
+\ir tbl_settlement_deduction.sql
+\ir tbl_withdrawal_request.sql
+\ir seed_badge.sql
+\ir tbl_like.sql

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="~{layout/layout :: ytShellHead('BIDEO | 유저 프로필')}"></th:block>
+    <link rel="stylesheet" href="/css/common/reset.css" th:href="@{/css/common/reset.css}" />
+    <link rel="stylesheet" href="/css/common/global.css" th:href="@{/css/common/global.css}" />
+    <link rel="stylesheet" href="/css/common/util.css" th:href="@{/css/common/util.css}" />
+    <link rel="stylesheet" href="/css/common/common.css" th:href="@{/css/common/common.css}" />
+    <link rel="stylesheet" href="/css/profile/profile.css" th:href="@{/css/profile/profile.css}" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="/js/modal/event.js" th:src="@{/js/modal/event.js}"></script>
+    <script defer src="/js/share/share.js" th:src="@{/js/share/share.js}"></script>
+    <script defer src="/js/profile/event.js" th:src="@{/js/profile/event.js}"></script>
+  </head>
+  <body>
+    <div th:replace="~{layout/layout :: ytShellChrome('profile')}"></div>
+    <main class="yt-shell__page-content">
+    <!-- 프로필 메인 영역 -->
+    <div id="section" class="profilePage section">
+      <div class="content">
+        <!-- 채널 상단 영역 -->
+        <div class="channelSection">
+          <!-- 배너 영역 -->
+          <div class="banner"
+               th:classappend="${profile.bannerImage != null and !#strings.isEmpty(profile.bannerImage)} ? ' has-image' : ' is-hidden'"
+               th:style="${profile.bannerImage != null and !#strings.isEmpty(profile.bannerImage)} ? |background-image: linear-gradient(180deg, rgba(16, 24, 40, 0.16), rgba(16, 24, 40, 0.48)), url('${profile.bannerImage}');| : null">
+          </div>
+
+          <!-- 프로필 메타 영역 -->
+          <div class="channelMeta">
+            <!-- 프로필 사진 영역 -->
+            <div class="avatar">
+              <img th:if="${profile.profileImage != null and !#strings.isEmpty(profile.profileImage)}"
+                   th:src="${profile.profileImage}"
+                   th:alt="|${profile.nickname} 프로필 이미지|">
+              <span th:unless="${profile.profileImage != null and !#strings.isEmpty(profile.profileImage)}"
+                    th:text="${profile.nickname != null and #strings.length(profile.nickname) > 0 ? #strings.substring(profile.nickname,0,1) : 'N'}">이</span>
+            </div>
+
+            <!-- 프로필 정보 영역 -->
+            <div class="metaInfo">
+              <h1 class="channelTitle">
+                <span data-profile-nickname th:text="${profile.nickname}">닉네임</span>
+                <a class="more" href="javascript:void(0)"></a>
+              </h1>
+              <p class="channelText">
+                <span th:if="${profile.realName != null and !#strings.isEmpty(profile.realName)}"
+                      data-profile-name th:text="|${profile.realName} · |">이름 · </span>
+                <span th:text="|팔로워 ${profile.followerCount}명 · 팔로잉 ${profile.followingCount}명 · 작품 ${profile.workCount}개|">팔로워 0명 · 팔로잉 0명 · 작품 0개</span>
+              </p>
+              <div class="profileBadgeRow" data-profile-badges>
+                <span class="profileBadgeChip" data-server-badge="true" th:each="badge : ${profileBadges}">
+                  <img th:src="@{/images/badge/{file}(file=${badge.imageFile})}" th:alt="${badge.badgeName}">
+                  <span th:text="${badge.badgeName}">뱃지명</span>
+                </span>
+              </div>
+              <p class="channelText" th:text="${profile.bio != null and !#strings.isEmpty(profile.bio) ? profile.bio : '아직 등록된 소개글이 없습니다.'}">설명글입니다.</p>
+              <div class="channelActionRow">
+                <button type="button"
+                        th:class="${profile.isFollowing} ? 'subscribeBtn is-subscribed' : 'subscribeBtn'"
+                        data-subscribe-button data-subscribe-default="팔로우" data-subscribe-active="팔로잉"
+                        th:text="${profile.isFollowing} ? '팔로잉' : '팔로우'">팔로우</button>
+                <button type="button" class="shareBtn" data-share-button>공유하기</button>
+                <button type="button"
+                        th:class="${profile.isBlocked} ? 'blackBtn is-blackBtn is-blocked' : 'blackBtn'"
+                        data-black-button
+                        th:text="${profile.isBlocked} ? '차단 해제' : '차단하기'">차단하기</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 프로필 탭 영역 -->
+          <nav class="tabRow">
+            <a href="javascript:void(0)"
+               class="tabBtn"
+               th:classappend="${selectedTab != 'works'} ? ' is-active' : ''"
+               data-channel-tab="galleries">예술관</a>
+            <a href="javascript:void(0)"
+               class="tabBtn"
+               th:classappend="${selectedTab == 'works'} ? ' is-active' : ''"
+               data-channel-tab="works">작품</a>
+          </nav>
+        </div>
+
+        <div class="videoEmpty" th:if="${blockedProfile}">
+          차단 된 유저입니다.
+        </div>
+
+        <!-- 작품 / 영상 리스트 영역 -->
+        <div class="videoSection" th:unless="${blockedProfile}">
+          <!-- 정렬 필터 영역 -->
+          <div class="filterRow">
+            <button type="button" class="filterBtn is-active" data-video-filter>최신순</button>
+            <button type="button" class="filterBtn" data-video-filter>인기순</button>
+            <button type="button" class="filterBtn" data-video-filter>오래된순</button>
+          </div>
+
+          <!-- 작품 / 영상 카드 그리드 -->
+          <div class="videoGrid" data-profile-panel="galleries" th:hidden="${selectedTab == 'works'}">
+            <article class="videoCard"
+                     th:if="${!#lists.isEmpty(galleries)}"
+                     th:each="gallery : ${galleries}"
+                     th:data-created-at="${gallery.createdDatetime}"
+                     th:data-popularity="${(gallery.viewCount == null ? 0 : gallery.viewCount) + (gallery.likeCount == null ? 0 : gallery.likeCount)}"
+                     th:classappend="${selectedGalleryId == gallery.id} ? ' is-selected' : ''">
+              <a th:href="@{/gallery/{id}(id=${gallery.id})}"
+                 class="videoThumb"
+                 th:classappend="${gallery.coverImage == null or #strings.isEmpty(gallery.coverImage)} ? ' thumb-01' : ''">
+                <img th:if="${gallery.coverImage != null and !#strings.isEmpty(gallery.coverImage)}"
+                     th:src="${gallery.coverImage}"
+                     th:alt="${gallery.title}">
+                <span th:text="${selectedGalleryId == gallery.id} ? '선택됨' : 'GALLERY'">GALLERY</span>
+              </a>
+              <h2 class="videoTitle" th:text="${gallery.title}">예술관 제목</h2>
+              <p class="videoMeta"
+                 th:text="|작품 ${gallery.workCount == null ? 0 : gallery.workCount}개 · 조회수 ${gallery.viewCount == null ? 0 : gallery.viewCount}회|">작품 0개 · 조회수 0회</p>
+            </article>
+            <div class="videoEmpty" th:if="${#lists.isEmpty(galleries)}">
+              아직 등록된 예술관이 없습니다.
+            </div>
+          </div>
+
+          <div class="videoGrid" data-profile-panel="works" th:hidden="${selectedTab != 'works'}">
+            <article class="videoCard"
+                     th:if="${!#lists.isEmpty(works)}"
+                     th:each="work : ${works}"
+                     th:data-created-at="${work.createdDatetime}"
+                     th:data-popularity="${(work.viewCount == null ? 0 : work.viewCount) + (work.likeCount == null ? 0 : work.likeCount) + (work.saveCount == null ? 0 : work.saveCount)}">
+              <a th:href="@{/work/detail/{id}(id=${work.id})}"
+                 class="videoThumb"
+                 th:classappend="${work.thumbnailUrl == null or #strings.isEmpty(work.thumbnailUrl)} ? ' thumb-02' : ''">
+                <video th:if="${work.thumbnailUrl != null and !#strings.isEmpty(work.thumbnailUrl) and work.thumbnailFileType != null and #strings.startsWith(work.thumbnailFileType, 'video/')}"
+                       class="videoThumbMedia"
+                       th:src="${work.thumbnailUrl}"
+                       muted
+                       playsinline
+                       preload="metadata"></video>
+                <img th:if="${work.thumbnailUrl != null and !#strings.isEmpty(work.thumbnailUrl) and (work.thumbnailFileType == null or !#strings.startsWith(work.thumbnailFileType, 'video/'))}"
+                     class="videoThumbMedia"
+                     th:src="${work.thumbnailUrl}"
+                     th:alt="${work.title}">
+                <span th:text="${work.category == null ? 'WORK' : work.category}">WORK</span>
+              </a>
+              <h2 class="videoTitle" th:text="${work.title}">작품 제목</h2>
+              <p class="videoMeta"
+                 th:text="|조회수 ${work.viewCount == null ? 0 : work.viewCount}회 · 좋아요 ${work.likeCount == null ? 0 : work.likeCount}개|">조회수 0회 · 좋아요 0개</p>
+            </article>
+            <div class="videoEmpty" th:if="${#lists.isEmpty(works)}">
+              아직 등록된 작품이 없습니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 공유 모달 -->
+    <div id="share-modal" class="modal profile none workShareModalWrap">
+      <div class="work-share-modal">
+        <div class="work-share-modal__header">
+          <div class="work-share-modal__spacer"></div>
+          <h2 class="work-share-modal__title">공유</h2>
+          <button class="work-share-modal__close" type="button" aria-label="닫기" onclick="modalClose('share-modal')">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline>
+              <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="work-share-modal__link-row">
+          <input class="work-share-modal__link-input" type="text" readonly th:value="${profilePath}" data-share-link-input>
+          <button class="work-share-modal__link-copy" type="button" data-share-copy>복사</button>
+        </div>
+        <div class="work-share-modal__receiver">
+          <label class="work-share-modal__label">받는 사람:</label>
+          <div class="work-share-modal__receiver-body">
+            <div class="work-share-modal__chips" data-share-chips></div>
+            <input class="work-share-modal__search" type="text" placeholder="검색..." autocomplete="off" data-share-search>
+          </div>
+        </div>
+        <div class="work-share-modal__list" data-share-list>
+          <div class="followManageEmpty">공유 대상을 불러오는 중입니다.</div>
+        </div>
+        <div class="work-share-modal__footer">
+          <input class="work-share-modal__message" type="text" placeholder="메시지 쓰기..." autocomplete="off" data-share-message>
+          <button class="work-share-modal__send" type="button" data-share-send>보내기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 팔로우 취소 모달 -->
+    <div id="unsubscribe-modal" class="modal profile none">
+      <div class="unsubscribeModalPanel">
+        <div class="unsubscribeModalHeader">
+          <h2 class="unsubscribeModalTitle">팔로우를 취소하시겠습니까?</h2>
+          <p class="unsubscribeModalText">
+            취소하면 이 계정의 새 콘텐츠를 기본 피드에서 바로 확인하기 어려울 수 있습니다.
+          </p>
+        </div>
+        <div class="unsubscribeModalButtonRow">
+          <button type="button" class="unsubscribeModalButton unsubscribeModalButtonPrimary" data-unsubscribe-confirm>팔로우 취소</button>
+          <button type="button" class="unsubscribeModalButton unsubscribeModalButtonGhost" onclick="modalClose('unsubscribe-modal')">닫기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 차단 모달 -->
+    <div id="black-modal" class="modal profile none">
+      <div class="unsubscribeModalPanel">
+        <div class="unsubscribeModalHeader">
+          <h2 class="unsubscribeModalTitle">이 사용자를 차단하시겠습니까?</h2>
+          <p class="unsubscribeModalText">
+            차단하면 서로의 프로필과 콘텐츠에 대한 상호작용이 제한됩니다.
+          </p>
+        </div>
+        <div class="unsubscribeModalButtonRow">
+          <button type="button" class="unsubscribeModalButton unsubscribeModalButtonPrimary" data-black-confirm>차단하기</button>
+          <button type="button" class="unsubscribeModalButton unsubscribeModalButtonGhost" onclick="modalClose('black-modal')">닫기</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 차단 해제 모달 -->
+    <div id="unblack-modal" class="modal profile none">
+      <div class="unsubscribeModalPanel">
+        <div class="unsubscribeModalHeader">
+          <h2 class="unsubscribeModalTitle">차단을 해제하시겠습니까?</h2>
+          <p class="unsubscribeModalText">
+            해제하면 다시 이 사용자와 프로필 및 콘텐츠 상호작용이 가능해집니다.
+          </p>
+        </div>
+        <div class="unsubscribeModalButtonRow">
+          <button type="button" class="unsubscribeModalButton unsubscribeModalButtonPrimary" data-unblack-confirm>차단 해제</button>
+          <button type="button" class="unsubscribeModalButton unsubscribeModalButtonGhost" onclick="modalClose('unblack-modal')">닫기</button>
+        </div>
+      </div>
+    </div>
+
+    </main>
+    <th:block th:replace="~{layout/layout :: ytShellScripts()}"></th:block>
+  </body>
+</html>
