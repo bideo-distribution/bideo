@@ -1,0 +1,71 @@
+server:
+  port: 10000
+  servlet:
+    session:
+      tracking-modes: cookie
+  forward-headers-strategy: native
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${EC2_HOST}:${PSQL_PORT}/${PSQL_DATABASE}?serverTimezone=Asia/Seoul
+    username: ${PSQL_USERNAME}
+    password: ${PSQL_PASSWORD}
+  session:
+    redis:
+      repository-type: indexed
+      flush-mode: immediate
+  data:
+    redis:
+      host: ${EC2_HOST}
+      port: ${REDIS_PORT}
+
+  cache:
+    type: redis
+
+  profiles:
+    active: local
+    include: oauth, sol, boot
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 10MB
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.app.bideo.domain; com.app.bideo.dto;
+  type-handlers-package: com.app.bideo.mybatis.handler
+  configuration:
+    map-underscore-to-camel-case: true
+
+# openssl rand -base64 32
+jwt:
+  secret: ${JWT_SECRET}
+
+aws:
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_KEY}
+  s3:
+    bucket-name: ${AWS_BUCKET_NAME}
+  region: ${AWS_REGION}
+
+ml:
+  api:
+    base-url: ${ML_API_BASE_URL}
+    connect-timeout: 3000
+    read-timeout: 30000
+
+app:
+  websocket:
+    broker:
+      relay:
+        enabled: false
+        host: localhost
+        port: 61613
+        client-login: guest
+        client-passcode: guest
+        system-login: guest
+        system-passcode: guest
