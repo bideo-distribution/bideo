@@ -32,7 +32,15 @@ jobs:
 
       - name: Copy project to EC2
         run: |
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa" . ${{ secrets.EC2_USER }}@$HOST:/home/ubuntu/bideo
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.idea' \
+            --exclude='.gradle' \
+            --exclude='build' \
+            --exclude='out' \
+            --exclude='.vscode' \
+            --exclude='.claude' \
+            -e "ssh -i ~/.ssh/id_rsa" . ${{ secrets.EC2_USER }}@$HOST:/home/ubuntu/bideo
 
       - name: Debug secret presence
         run: |
