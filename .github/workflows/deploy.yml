@@ -32,7 +32,7 @@ jobs:
 
       - name: Copy project to EC2
         run: |
-          rsync -avz --delete \
+          rsync -avz --delete --delete-excluded \
             --exclude='.git' \
             --exclude='.idea' \
             --exclude='.gradle' \
