@@ -1,0 +1,19 @@
+bootpay:
+  enabled: true
+  pg: tosspayments
+  js-application-id: ${BOOTPAY_JS_API_KEY}
+  rest-client-key: ${BOOTPAY_REST_API_KEY}
+  private-key: ${BOOTPAY_PRIVATE_KEY}
+
+boot-pay:
+  enabled: true
+  mode: test
+  api:
+    application-id: ${BOOTPAY_REST_API_KEY}
+    private-key: ${BOOTPAY_PRIVATE_KEY}
+  billing:
+    pg: 토스
+    customer:
+      key-prefix: BIDEO_MEMBER_
+  urls:
+    server-base-url: https://api.bootpay.co.kr
