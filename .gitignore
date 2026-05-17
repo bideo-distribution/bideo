@@ -84,9 +84,12 @@ HELP.md
 # =====================================================
 # 보안/로컬 설정 (커밋 금지)
 # =====================================================
-application*
-*.yaml
-*.yml
+# application*.yaml/yml은 환경변수(${...}) 패턴으로 커밋한다.
+# 단, 평문 시크릿이 들어가는 *-secret 파일은 차단.
+application*-secret.yaml
+application*-secret.yml
+application*-local.yaml
+application*-local.yml
 src/main/resources/certs/
 certs
 key/
