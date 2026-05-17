@@ -88,8 +88,10 @@ WORKDIR /app
 # 프로젝트 루트에 있는 파일을 컨테이너 안으로 복사해서 넣기
 COPY . .
 
-# 빌드
-RUN chmod +x ./gradlew && ./gradlew build
+# 빌드 (캐시 정리로 이미지 레이어 크기 축소)
+RUN chmod +x ./gradlew && \
+    ./gradlew build --no-daemon && \
+    rm -rf /root/.gradle /app/.gradle
 
 # 실행만 담당하는 jre 환경으로 설정한다.
 FROM eclipse-temurin:17-jre
