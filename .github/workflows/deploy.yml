@@ -43,14 +43,14 @@ jobs:
           echo "REDIS_PORT length: ${#X5}"
           echo "EC2_HOST length: ${#X6}"
           echo "JWT_SECRET length: ${#X7}"
-         echo "AWS_BUCKET_NAME length: ${#A1}"
-        echo "ML_API_BASE_URL length: ${#A2}"
-        echo "BOOTPAY_PRIVATE_KEY length: ${#A3}"
-        echo "BOOTPAY_REST_API_KEY length: ${#A4}"
-        echo "SOLAPI_API_SECRET length: ${#A5}"
-        echo "SPRING_MAIL_PASSWORD length: ${#A6}"
-        echo "EC2_USER length: ${#A7}"
-        echo "EC2_KEY length: ${#A8}"
+          echo "AWS_BUCKET_NAME length: ${#A1}"  
+          echo "ML_API_BASE_URL length: ${#A2}"
+          echo "BOOTPAY_PRIVATE_KEY length: ${#A3}"
+          echo "BOOTPAY_REST_API_KEY length: ${#A4}"
+          echo "SOLAPI_API_SECRET length: ${#A5}"
+          echo "SPRING_MAIL_PASSWORD length: ${#A6}"
+          echo "EC2_USER length: ${#A7}"
+          echo "EC2_KEY length: ${#A8}"
         
         env:
           X1: ${{ secrets.PSQL_PORT }}
