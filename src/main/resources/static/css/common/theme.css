@@ -4011,8 +4011,7 @@ html, body {
 
 /* ── bd-chat 컴포넌트 일괄 ──────────────────────────────── */
 :root[data-theme="dark"] .bd-chat-bubble--self {
-  background: var(--bd-color-accent) !important;
-  color: var(--bd-color-accent-text) !important;
+  background: transparent !important;
 }
 
 :root[data-theme="dark"] .bd-chat-bubble__action {
