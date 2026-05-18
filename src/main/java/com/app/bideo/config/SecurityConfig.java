@@ -3,6 +3,7 @@ package com.app.bideo.config;
 import com.app.bideo.auth.member.AuthenticationFilter;
 import com.app.bideo.auth.member.AuthenticationHandler;
 import com.app.bideo.auth.member.AuthorizationHandler;
+import com.app.bideo.auth.member.CookieOAuth2AuthorizationRequestRepository;
 import com.app.bideo.auth.member.OAuth2SuccessHandler;
 import com.app.bideo.service.member.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class SecurityConfig {
     private final AuthenticationFilter authenticationFilter;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final CookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -73,6 +75,9 @@ public class SecurityConfig {
                         .accessDeniedHandler(authorizationHandler)
                 )
                 .oauth2Login(oauth -> oauth
+                        .authorizationEndpoint(authz -> authz
+                                .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository)
+                        )
                         .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
                 )
