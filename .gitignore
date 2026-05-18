@@ -94,7 +94,8 @@ src/main/resources/certs/
 certs
 key/
 *.zip
-
+deploy_setup.sql
+src/main/resources/sql/
 # =====================================================
 # 프로젝트 전용
 # =====================================================
