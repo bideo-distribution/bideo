@@ -61,7 +61,7 @@
         LEFT JOIN tbl_message reply ON msg.reply_to_message_id = reply.id
         LEFT JOIN tbl_member reply_sender ON reply.sender_id = reply_sender.id
         WHERE msg.message_room_id = #{roomId}
-        ORDER BY msg.created_datetime ASC, msg.id ASC
+        ORDER BY msg.created_datetime DESC, msg.id DESC
         LIMIT #{limit} OFFSET #{offset}
     </select>
 

@@ -3,7 +3,7 @@ window.addEventListener("load", function () {
   window.__bideoHomeInit = true;
 
   function attachHoverOverlay(thumb) {
-    letoverlay = thumb.querySelector(".shelf-card__overlay");
+    let overlay = thumb.querySelector(".shelf-card__overlay");
     if (!overlay || thumb.dataset.hoverBound === "1") {
       return;
     }
@@ -26,14 +26,14 @@ window.addEventListener("load", function () {
 
   document.querySelectorAll(".shelf-card__thumb").forEach(attachHoverOverlay);
 
-  letgrid = document.querySelector(".shelf-grid");
-  letsentinel = document.querySelector(".shelf-sentinel");
+  let grid = document.querySelector(".shelf-grid");
+  let sentinel = document.querySelector(".shelf-sentinel");
   if (!grid || !sentinel || !("IntersectionObserver" in window)) {
     return;
   }
 
-  letloading = false;
-  letended = false;
+  let loading = false;
+  let ended = false;
 
   function escapeHtml(value) {
     if (value == null) return "";
@@ -46,14 +46,14 @@ window.addEventListener("load", function () {
   }
 
   function buildCard(gallery) {
-    letcard = document.createElement("div");
+    let card = document.createElement("div");
     card.className = "shelf-card";
 
-    lettitle = escapeHtml(gallery.title);
-    letdesc = escapeHtml(gallery.description);
-    letcover = escapeHtml(gallery.coverImage || "");
-    letworkCount = (gallery.workCount != null ? gallery.workCount : 0) + "작품";
-    lethref = "/gallery/" + encodeURIComponent(gallery.id);
+    let title = escapeHtml(gallery.title);
+    let desc = escapeHtml(gallery.description);
+    let cover = escapeHtml(gallery.coverImage || "");
+    let workCount = (gallery.workCount != null ? gallery.workCount : 0) + "작품";
+    let href = "/gallery/" + encodeURIComponent(gallery.id);
 
     card.innerHTML =
       '<a href="' + href + '">' +
@@ -94,11 +94,11 @@ window.addEventListener("load", function () {
     if (loading || ended) return;
     loading = true;
 
-    letpage = parseInt(grid.dataset.nextPage, 10) || 2;
-    letsize = parseInt(grid.dataset.pageSize, 10) || 20;
-    lettag = grid.dataset.tag;
+    let page = parseInt(grid.dataset.nextPage, 10) || 2;
+    let size = parseInt(grid.dataset.pageSize, 10) || 20;
+    let tag = grid.dataset.tag;
 
-    letparams = new URLSearchParams();
+    let params = new URLSearchParams();
     params.set("page", page);
     params.set("size", size);
     if (tag) params.set("tag", tag);
@@ -111,14 +111,14 @@ window.addEventListener("load", function () {
         return res.json();
       })
       .then(function (data) {
-        letcontent = (data && data.content) || [];
+        let content = (data && data.content) || [];
         content.forEach(function (gallery) {
-          letcard = buildCard(gallery);
+          let card = buildCard(gallery);
           grid.appendChild(card);
           attachHoverOverlay(card.querySelector(".shelf-card__thumb"));
         });
 
-        lettotalPages = data && data.totalPages;
+        let totalPages = data && data.totalPages;
         if (content.length === 0 || (totalPages != null && page >= totalPages)) {
           finish();
         } else {
@@ -133,7 +133,7 @@ window.addEventListener("load", function () {
       });
   }
 
-  letobserver = new IntersectionObserver(function (entries) {
+  let observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) loadNext();
     });

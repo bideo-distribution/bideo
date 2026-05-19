@@ -33,6 +33,10 @@ window.addEventListener("load", function () {
   let stompClient = null;
   let currentSubscription = null;
   let userSubscription = null;
+  let activeRoomPage = 0;
+  let activeRoomHasMore = true;
+  let isLoadingMore = false;
+  const MESSAGE_PAGE_SIZE = 50;
   let currentUserId = (function () {
     let meta = document.querySelector('meta[name="bd-current-user-id"]');
     return meta ? meta.getAttribute("content") : null;
@@ -229,19 +233,36 @@ window.addEventListener("load", function () {
 
   function handleRealtimeEvent(event) {
     if (isChatPanelOpen() && String(event.roomId) === String(activeRoomId)) {
-      loadMessages(activeRoomId);
+      let room = findRoom(activeRoomId);
+      if (room && event.message) {
+        if (event.type === "CREATED") {
+          room.messages.push(event.message);
+          renderMessages(room);
+          messagesNode.scrollTop = messagesNode.scrollHeight;
+        } else {
+          let idx = room.messages.findIndex(function (m) { return m.id === event.message.id; });
+          if (idx >= 0) {
+            room.messages[idx] = event.message;
+            renderMessages(room);
+          }
+        }
+      }
     }
     if (isChatPanelOpen()) loadRooms();
     updateBadge();
   }
 
   function loadMessages(roomId) {
-    fetch("/api/messages/rooms/" + roomId + "/messages", { credentials: "same-origin" })
+    activeRoomPage = 0;
+    activeRoomHasMore = true;
+    isLoadingMore = false;
+    fetch("/api/messages/rooms/" + roomId + "/messages?page=0", { credentials: "same-origin" })
       .then(function (res) { return res.ok ? res.json() : []; })
       .then(function (messages) {
         let room = findRoom(roomId);
         if (!room) return;
         room.messages = messages;
+        activeRoomHasMore = messages.length === MESSAGE_PAGE_SIZE;
         renderMessages(room);
         messagesNode.scrollTop = messagesNode.scrollHeight;
         fetch("/api/messages/rooms/" + roomId + "/read", { method: "PATCH", credentials: "same-origin" })
@@ -250,6 +271,36 @@ window.addEventListener("load", function () {
       })
       .catch(function () {});
   }
+
+  function loadMoreMessages() {
+    if (isLoadingMore || !activeRoomHasMore || !activeRoomId) return;
+    isLoadingMore = true;
+    let nextPage = activeRoomPage + 1;
+    let prevScrollHeight = messagesNode.scrollHeight;
+    let prevScrollTop = messagesNode.scrollTop;
+    fetch("/api/messages/rooms/" + activeRoomId + "/messages?page=" + nextPage, { credentials: "same-origin" })
+      .then(function (res) { return res.ok ? res.json() : []; })
+      .then(function (messages) {
+        let room = findRoom(activeRoomId);
+        if (!room) { isLoadingMore = false; return; }
+        if (!messages.length) {
+          activeRoomHasMore = false;
+          isLoadingMore = false;
+          return;
+        }
+        room.messages = messages.concat(room.messages);
+        activeRoomPage = nextPage;
+        activeRoomHasMore = messages.length === MESSAGE_PAGE_SIZE;
+        renderMessages(room);
+        messagesNode.scrollTop = prevScrollTop + (messagesNode.scrollHeight - prevScrollHeight);
+        isLoadingMore = false;
+      })
+      .catch(function () { isLoadingMore = false; });
+  }
+
+  messagesNode.addEventListener("scroll", function () {
+    if (messagesNode.scrollTop < 80) loadMoreMessages();
+  });
 
   function renderMessages(room) {
     messagesNode.innerHTML = room.messages
@@ -629,7 +680,6 @@ window.addEventListener("load", function () {
         .then(function (res) { return res.json(); })
         .then(function () {
           composerInput.value = "";
-          loadMessages(room.id);
           loadRooms();
         })
         .catch(function () {});
