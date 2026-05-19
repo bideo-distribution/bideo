@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -78,8 +79,10 @@ public class MessageService {
     @Transactional(readOnly = true)
     public List<MessageResponseDTO> getMessages(Long roomId, Long currentMemberId, int page) {
         validateRoomAccess(roomId, currentMemberId);
+        // 매퍼는 최신순(DESC)으로 가져오고, 화면 표시를 위해 시간순(ASC)으로 뒤집어 반환
         List<MessageResponseDTO> messages = messageDAO.findByRoomId(roomId, currentMemberId, page * PAGE_SIZE, PAGE_SIZE);
         messages.forEach(this::normalizeMessageProfileImage);
+        Collections.reverse(messages);
         return messages;
     }
 
