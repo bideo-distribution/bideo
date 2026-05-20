@@ -1,6 +1,7 @@
 package com.app.bideo.service.common;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class S3FileService {
@@ -50,6 +52,11 @@ public class S3FileService {
             s3Client.putObject(putRequest, RequestBody.fromBytes(file.getBytes()));
             return key;
         } catch (Exception e) {
+            log.error("[S3] upload 실패 — bucket={}, key={}, size={}B, contentType={}, cause={}",
+                    bucket, key,
+                    file != null ? file.getSize() : -1,
+                    file != null ? file.getContentType() : "?",
+                    e.toString(), e);
             throw new IllegalStateException("S3 업로드에 실패했습니다.", e);
         }
     }
@@ -75,6 +82,8 @@ public class S3FileService {
             s3Client.putObject(putRequest, RequestBody.fromBytes(bytes));
             return key;
         } catch (Exception e) {
+            log.error("[S3] upload(bytes) 실패 — bucket={}, key={}, size={}B, contentType={}, cause={}",
+                    bucket, key, bytes != null ? bytes.length : -1, contentType, e.toString(), e);
             throw new IllegalStateException("S3 업로드에 실패했습니다.", e);
         }
     }
