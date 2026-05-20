@@ -73,6 +73,80 @@ public class ContestController {
         return contestService.getContestDetail(id, memberId);
     }
 
+    /**
+     * 공모전 출품작 목록.
+     * - 주최자: 전체 출품작 목록 반환
+     * - 그 외: 우승작(awardRank 있음) 만 노출 (공개 발표 후라 OK). 미발표면 빈 배열.
+     */
+    @GetMapping("/api/{id}/entries")
+    @ResponseBody
+    public org.springframework.http.ResponseEntity<java.util.List<com.app.bideo.dto.contest.ContestEntryResponseDTO>>
+            apiEntries(@PathVariable Long id,
+                       @AuthenticationPrincipal CustomUserDetails userDetails) {
+        java.util.List<com.app.bideo.dto.contest.ContestEntryResponseDTO> all =
+                contestService.getContestEntryList(id);
+
+        com.app.bideo.dto.contest.ContestDetailResponseDTO detail =
+                contestService.getContestDetail(id, userDetails != null ? userDetails.getId() : null);
+        boolean isHost = userDetails != null && detail != null && detail.getMemberId() != null
+                && detail.getMemberId().equals(userDetails.getId());
+
+        if (isHost) {
+            return org.springframework.http.ResponseEntity.ok(all);
+        }
+        // 비주최자 — 우승작만 노출
+        java.util.List<com.app.bideo.dto.contest.ContestEntryResponseDTO> winnersOnly = all.stream()
+                .filter(e -> e.getAwardRank() != null && !e.getAwardRank().isBlank())
+                .toList();
+        return org.springframework.http.ResponseEntity.ok(winnersOnly);
+    }
+
+    /** 주최자가 우승작 선정 — body: { entryId }. 권한 체크는 service.selectWinner 안에서. */
+    @PostMapping("/api/{id}/winner")
+    @ResponseBody
+    public org.springframework.http.ResponseEntity<Map<String, Object>> apiSelectWinner(
+            @PathVariable Long id,
+            @RequestBody Map<String, Long> body,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            return org.springframework.http.ResponseEntity.status(401)
+                    .body(Map.of("success", false, "message", "로그인이 필요합니다."));
+        }
+        Long entryId = body.get("entryId");
+        if (entryId == null) {
+            return org.springframework.http.ResponseEntity.badRequest()
+                    .body(Map.of("success", false, "message", "entryId 가 필요합니다."));
+        }
+        try {
+            contestService.selectWinner(id, userDetails.getId(), entryId);
+            return org.springframework.http.ResponseEntity.ok(Map.of("success", true));
+        } catch (IllegalStateException e) {
+            String msg = e.getMessage();
+            String userMsg;
+            if ("winner already announced".equals(msg)) {
+                userMsg = "이미 우승작이 발표된 공모전입니다.";
+            } else if ("winner selection not available yet".equals(msg)) {
+                userMsg = "접수 마감일 이후에만 우승작을 선정할 수 있습니다.";
+            } else {
+                userMsg = msg != null ? msg : "우승작 선정에 실패했습니다.";
+            }
+            return org.springframework.http.ResponseEntity.status(409)
+                    .body(Map.of("success", false, "message", userMsg));
+        } catch (IllegalArgumentException e) {
+            String msg = e.getMessage();
+            String userMsg;
+            if ("contest not found".equals(msg) || "contest not found or not owned by member".equals(msg)) {
+                userMsg = "공모전을 찾을 수 없거나 주최자가 아닙니다.";
+            } else if ("contest entry not found".equals(msg)) {
+                userMsg = "선택한 출품작을 찾을 수 없습니다.";
+            } else {
+                userMsg = msg != null ? msg : "우승작 선정에 실패했습니다.";
+            }
+            return org.springframework.http.ResponseEntity.badRequest()
+                    .body(Map.of("success", false, "message", userMsg));
+        }
+    }
+
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("contestForm", new ContestCreateRequestDTO());
