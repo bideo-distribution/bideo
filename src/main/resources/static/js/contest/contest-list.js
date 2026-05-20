@@ -309,6 +309,9 @@ const ContestListModule = (function () {
             });
         }
 
+        /* 출품작 그리드 + 우승작 배너 로드 */
+        loadContestEntries(data);
+
         let applyBtn = document.querySelector(".Contest-Detail-ApplyBtn");
         if (applyBtn) {
             applyBtn.onclick = function () {
@@ -793,4 +796,152 @@ if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", ContestListModule.init);
 } else {
     ContestListModule.init();
+}
+
+/* ───── 출품작 목록 + 우승작 배너 + 주최자용 선정 ───── */
+function loadContestEntries(contest) {
+    let grid     = document.getElementById("detailEntriesGrid");
+    let countEl  = document.getElementById("detailEntriesCount");
+    let emptyEl  = document.getElementById("detailEntriesEmpty");
+    let winner   = document.getElementById("detailWinner");
+    let entriesSection = document.querySelector(".Contest-Detail-EntriesSection");
+    if (!grid) return;
+
+    // 그리드 초기화 (안내문구는 유지)
+    Array.from(grid.querySelectorAll(".Contest-Detail-EntryCard")).forEach(function (n) { n.remove(); });
+    if (winner) winner.hidden = true;
+
+    let currentUserId = null;
+    let meta = document.querySelector('meta[name="bd-current-user-id"]');
+    if (meta) currentUserId = parseInt(meta.getAttribute("content"), 10);
+    let isHost = currentUserId && contest.memberId && currentUserId === contest.memberId;
+    let entryEndPassed = false;
+    if (contest.entryEnd) {
+        let endDate = new Date(contest.entryEnd);
+        entryEndPassed = !isNaN(endDate.getTime()) && endDate < new Date();
+    }
+    let winnerAlreadyAnnounced = !!contest.winnerNotifiedAt;
+
+    // 출품작 그리드는 주최자만 열람 — 참가자/일반 사용자에겐 섹션 자체를 숨김.
+    // 우승작 배너는 발표 후 공개라 별도 fetch 로 분리.
+    if (!isHost) {
+        if (entriesSection) entriesSection.hidden = true;
+        // 우승작만 가져와 배너 표시
+        fetch("/contest/api/" + contest.id + "/entries", { credentials: "same-origin" })
+            .then(function (res) { return res.ok ? res.json() : []; })
+            .then(function (entries) {
+                let winnerEntry = (entries || []).find(function (e) {
+                    return e.awardRank && e.awardRank.length > 0;
+                });
+                if (winnerEntry && winner) {
+                    document.getElementById("detailWinnerThumb").src = winnerEntry.workThumbnail || "/images/default-profile.svg";
+                    document.getElementById("detailWinnerTitle").textContent = winnerEntry.workTitle || "";
+                    document.getElementById("detailWinnerAuthor").textContent = winnerEntry.memberNickname || "";
+                    winner.hidden = false;
+                }
+            })
+            .catch(function () { /* 비공개 / 오류 — 배너 없이 유지 */ });
+        return;
+    }
+
+    if (entriesSection) entriesSection.hidden = false;
+
+    fetch("/contest/api/" + contest.id + "/entries", { credentials: "same-origin" })
+        .then(function (res) { return res.ok ? res.json() : []; })
+        .then(function (entries) {
+            entries = Array.isArray(entries) ? entries : [];
+            countEl.textContent = entries.length;
+
+            if (entries.length === 0) {
+                if (emptyEl) emptyEl.hidden = false;
+                return;
+            }
+            if (emptyEl) emptyEl.hidden = true;
+
+            // 우승작 배너
+            let winnerEntry = entries.find(function (e) {
+                return e.awardRank && e.awardRank.length > 0;
+            });
+            if (winnerEntry && winner) {
+                document.getElementById("detailWinnerThumb").src = winnerEntry.workThumbnail || "/images/default-profile.svg";
+                document.getElementById("detailWinnerTitle").textContent = winnerEntry.workTitle || "";
+                document.getElementById("detailWinnerAuthor").textContent = winnerEntry.memberNickname || "";
+                winner.hidden = false;
+            }
+
+            // 카드 렌더
+            entries.forEach(function (entry) {
+                let card = document.createElement("div");
+                card.className = "Contest-Detail-EntryCard";
+                if (entry.awardRank) card.classList.add("is-winner");
+
+                let img = document.createElement("img");
+                img.className = "Contest-Detail-EntryCard__Thumb";
+                img.src = entry.workThumbnail || "/images/default-profile.svg";
+                img.alt = entry.workTitle || "";
+                img.onerror = function () { this.onerror = null; this.src = "/images/default-profile.svg"; };
+                card.appendChild(img);
+
+                let title = document.createElement("div");
+                title.className = "Contest-Detail-EntryCard__Title";
+                title.textContent = entry.workTitle || "(제목 없음)";
+                card.appendChild(title);
+
+                let author = document.createElement("div");
+                author.className = "Contest-Detail-EntryCard__Author";
+                author.textContent = entry.memberNickname || "";
+                card.appendChild(author);
+
+                if (entry.awardRank) {
+                    let badge = document.createElement("span");
+                    badge.className = "Contest-Detail-EntryCard__Badge";
+                    badge.textContent = "🏆 " + entry.awardRank;
+                    card.appendChild(badge);
+                }
+
+                // 주최자 + 접수 마감 후 + 우승작 미선정 → 선정 버튼
+                if (isHost && entryEndPassed && !winnerAlreadyAnnounced && !entry.awardRank) {
+                    let btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.className = "Contest-Detail-EntryCard__SelectBtn";
+                    btn.textContent = "우승작 선정";
+                    btn.onclick = function () { selectWinnerEntry(contest.id, entry.id); };
+                    card.appendChild(btn);
+                }
+
+                grid.appendChild(card);
+            });
+        })
+        .catch(function () {
+            countEl.textContent = 0;
+            if (emptyEl) {
+                emptyEl.hidden = false;
+                emptyEl.textContent = "출품작을 불러오지 못했습니다.";
+            }
+        });
+}
+
+function selectWinnerEntry(contestId, entryId) {
+    if (!confirm("이 출품작을 우승작으로 선정하시겠습니까? 한 번 선정하면 변경할 수 없습니다.")) return;
+    fetch("/contest/api/" + contestId + "/winner", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ entryId: entryId })
+    })
+        .then(function (res) { return res.json().then(function (j) { return { ok: res.ok, body: j }; }); })
+        .then(function (r) {
+            if (!r.ok || !r.body.success) {
+                alert(r.body.message || "우승작 선정에 실패했습니다.");
+                return;
+            }
+            alert("우승작이 선정되었습니다. 출품자에게 곧 알림이 발송됩니다.");
+            // 상세 패널 다시 로드
+            fetch("/contest/api/detail/" + contestId, { credentials: "same-origin" })
+                .then(function (res) { return res.json(); })
+                .then(function (data) { loadContestEntries(data); });
+        })
+        .catch(function () {
+            alert("우승작 선정 중 오류가 발생했습니다.");
+        });
 }

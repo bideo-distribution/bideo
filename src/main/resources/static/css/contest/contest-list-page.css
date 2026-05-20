@@ -791,3 +791,121 @@ button {
     color: var(--color-text-sub);
     user-select: none;
 }
+
+/* ===== 출품작 그리드 + 우승작 배너 ===== */
+.Contest-Detail-Winner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 12px 0;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    color: #1a1a1a;
+}
+.Contest-Detail-Winner-Badge {
+    flex: 0 0 auto;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+}
+.Contest-Detail-Winner-Thumb {
+    width: 56px; height: 56px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex: 0 0 auto;
+}
+.Contest-Detail-Winner-Meta { flex: 1 1 auto; min-width: 0; }
+.Contest-Detail-Winner-Title { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.Contest-Detail-Winner-Author { font-size: 12px; opacity: 0.7; margin-top: 2px; }
+
+.Contest-Detail-EntriesSection { padding: 12px 0; }
+.Contest-Detail-EntriesTitle {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 700;
+}
+.Contest-Detail-EntriesTitle span { color: var(--color-text-sub, #888); font-weight: 500; }
+
+.Contest-Detail-EntriesGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+.Contest-Detail-EntriesEmpty {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 20px 0;
+    text-align: center;
+    color: var(--color-text-sub, #888);
+    font-size: 13px;
+}
+
+.Contest-Detail-EntryCard {
+    position: relative;
+    padding: 8px;
+    border-radius: 12px;
+    background: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+}
+.Contest-Detail-EntryCard.is-winner {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+.Contest-Detail-EntryCard__Thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #eaeaea;
+}
+.Contest-Detail-EntryCard__Title {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.Contest-Detail-EntryCard__Author {
+    font-size: 12px;
+    color: var(--color-text-sub, #888);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.Contest-Detail-EntryCard__Badge {
+    position: absolute;
+    top: 8px; left: 8px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+}
+.Contest-Detail-EntryCard__SelectBtn {
+    margin-top: 8px;
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--bd-color-accent, #6800EA);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.Contest-Detail-EntryCard__SelectBtn:hover { opacity: 0.9; }
+
+:root[data-theme="dark"] .Contest-Detail-EntryCard {
+    background: #1f1f1f;
+    color: #f1f1f1;
+}
+:root[data-theme="dark"] .Contest-Detail-EntryCard__Author { color: #aaa; }
+:root[data-theme="dark"] .Contest-Detail-Winner {
+    background: linear-gradient(135deg, #4a3d10 0%, #6b5615 100%);
+    color: #fef3c7;
+}

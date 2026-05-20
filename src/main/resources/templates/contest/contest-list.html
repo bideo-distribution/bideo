@@ -114,6 +114,26 @@
 
             <div class="Contest-Detail-Divider"></div>
 
+            <!-- 우승작 배너 (우승작이 선정된 경우에만) -->
+            <div class="Contest-Detail-Winner" id="detailWinner" hidden>
+                <span class="Contest-Detail-Winner-Badge">🏆 우승작</span>
+                <img class="Contest-Detail-Winner-Thumb" id="detailWinnerThumb" alt="" src="" />
+                <div class="Contest-Detail-Winner-Meta">
+                    <div class="Contest-Detail-Winner-Title" id="detailWinnerTitle"></div>
+                    <div class="Contest-Detail-Winner-Author" id="detailWinnerAuthor"></div>
+                </div>
+            </div>
+
+            <!-- 출품작 그리드 -->
+            <div class="Contest-Detail-EntriesSection">
+                <h3 class="Contest-Detail-EntriesTitle">출품작 <span id="detailEntriesCount">0</span></h3>
+                <div class="Contest-Detail-EntriesGrid" id="detailEntriesGrid">
+                    <p class="Contest-Detail-EntriesEmpty" id="detailEntriesEmpty">아직 출품된 작품이 없습니다.</p>
+                </div>
+            </div>
+
+            <div class="Contest-Detail-Divider"></div>
+
             <!-- 액션 버튼 -->
             <div class="Contest-Detail-ButtonGroup">
                 <button class="Contest-Detail-ApplyBtn">참가 신청</button>
