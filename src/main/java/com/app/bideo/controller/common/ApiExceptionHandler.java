@@ -2,7 +2,11 @@ package com.app.bideo.controller.common;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -18,8 +22,21 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<Map<String, String>> handleAuthentication(AuthenticationException exception) {
+        // Spring Security 가 던지는 영어 메시지(Bad credentials, UsernameNotFoundException 등) 를
+        // 그대로 노출하지 않고 사용자 친화 한국어 메시지로 표준화.
+        String message;
+        if (exception instanceof BadCredentialsException
+                || exception instanceof UsernameNotFoundException) {
+            message = "이메일 또는 비밀번호가 올바르지 않습니다.";
+        } else if (exception instanceof DisabledException) {
+            message = "비활성화된 계정입니다. 관리자에게 문의해 주세요.";
+        } else if (exception instanceof LockedException) {
+            message = "잠긴 계정입니다. 관리자에게 문의해 주세요.";
+        } else {
+            message = "로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.";
+        }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(Map.of("message", resolveMessage(exception, "authentication failed")));
+                .body(Map.of("message", message));
     }
 
     @ExceptionHandler(IllegalStateException.class)

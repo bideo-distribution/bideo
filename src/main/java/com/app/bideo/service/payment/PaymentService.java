@@ -2,6 +2,7 @@ package com.app.bideo.service.payment;
 
 import com.app.bideo.domain.order.OrderVO;
 import com.app.bideo.domain.payment.PaymentVO;
+import com.app.bideo.dto.work.WorkDTO;
 import com.app.bideo.dto.payment.BootpayConfirmRequestDTO;
 import com.app.bideo.dto.common.PageResponseDTO;
 import com.app.bideo.dto.payment.BootpayPaymentResultDTO;
@@ -162,7 +163,11 @@ public class PaymentService {
             orderDAO.updateStatus(order.getId(), "PAID");
             paymentDAO.updateOtherOpenByBuyerAndWork(payment.getBuyerId(), payment.getWorkId(), payment.getId(), "CANCELLED");
             orderDAO.updateOtherPendingByBuyerAndWork(payment.getBuyerId(), payment.getWorkId(), order.getId(), "CANCELLED");
+            String workTitle = null;
             if (order.getWorkId() != null) {
+                workTitle = workDAO.findById(order.getWorkId())
+                        .map(WorkDTO::getTitle)
+                        .orElse(null);
                 workDAO.updateStatus(order.getWorkId(), "SOLD");
                 galleryDAO.findGalleryIdByWorkId(order.getWorkId()).ifPresent(galleryId -> {
                     galleryDAO.deleteWorkLinkByWorkId(order.getWorkId());
@@ -170,9 +175,13 @@ public class PaymentService {
                 });
             }
 
+            // 판매자 알림 — "○○ 작품이 판매되었습니다." (제목 못 가져온 경우 fallback)
+            String sellerMessage = workTitle != null && !workTitle.isBlank()
+                    ? "'" + workTitle + "' 작품이 판매되었습니다."
+                    : "내 작품 한 점이 판매되었습니다.";
             notificationService.createNotification(
-                    order.getSellerId(), order.getBuyerId(), "PAYMENT", "ORDER",
-                    order.getId(), "결제가 완료되었습니다."
+                    order.getSellerId(), order.getBuyerId(), "SALE", "ORDER",
+                    order.getId(), sellerMessage
             );
         }
 
@@ -234,9 +243,16 @@ public class PaymentService {
         if (order != null) {
             orderDAO.updateStatus(order.getId(), "REFUNDED");
 
+            String workTitle = order.getWorkId() == null ? null
+                    : workDAO.findById(order.getWorkId())
+                            .map(WorkDTO::getTitle)
+                            .orElse(null);
+            String message = workTitle != null && !workTitle.isBlank()
+                    ? "'" + workTitle + "' 작품 결제가 환불 처리되었습니다."
+                    : "결제가 환불 처리되었습니다.";
             notificationService.createNotification(
-                    order.getSellerId(), order.getBuyerId(), "PAYMENT", "ORDER",
-                    order.getId(), "결제가 환불 처리되었습니다."
+                    order.getSellerId(), order.getBuyerId(), "REFUND", "ORDER",
+                    order.getId(), message
             );
         }
 

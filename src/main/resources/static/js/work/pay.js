@@ -309,7 +309,8 @@ function isBootpayServerKeyError(error) {
 }
 
 function redirectToPaymentHistory() {
-    window.location.replace("/dashboard?tab=payment");
+    // 결제 완료 신호 query 와 함께 이동 — dashboard.js 가 잡아서 토스트 띄움
+    window.location.replace("/dashboard?tab=payment&paid=1");
 }
 
 function buildBootpayCustomerKey(order, payment) {
