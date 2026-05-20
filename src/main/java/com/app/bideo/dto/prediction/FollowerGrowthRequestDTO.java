@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FollowerGrowthRequestDTO {
 
-    /** 가입 후 경과 주(週) 수. */
+    /** 첫 팔로워 이후 경과 주(週) 수. (실데이터 모델은 "데뷔" 기준) */
     @JsonProperty("current_week_offset")
     private Integer currentWeekOffset;
 
@@ -29,4 +29,16 @@ public class FollowerGrowthRequestDTO {
     /** 몇 주 후를 예측할지 (1~52). */
     @JsonProperty("weeks_ahead")
     private Integer weeksAhead;
+
+    /** 업로드한 작품 수 (활동량 핵심 피처). */
+    @JsonProperty("n_works")
+    private Integer nWorks;
+
+    /** 최근 4주간 팔로워 증감 (음수 가능). */
+    @JsonProperty("recent_velocity_4w")
+    private Integer recentVelocity4w;
+
+    /** 인증 작가 여부 (0/1). */
+    @JsonProperty("creator_verified")
+    private Integer creatorVerified;
 }

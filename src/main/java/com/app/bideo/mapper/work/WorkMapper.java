@@ -30,6 +30,12 @@ public interface WorkMapper {
 
     int updateWork(WorkDTO workDTO);
 
+    /** 작품 임베딩 (text-embedding-3-small 1536d) 을 Postgres array 리터럴 형태로 저장. */
+    int updateEmbedding(@Param("id") Long id, @Param("embeddingLiteral") String embeddingLiteral);
+
+    /** 시맨틱 검색 결과(work_id list) 를 입력 순서 그대로 작품 메타 join 해서 반환. */
+    List<WorkListResponseDTO> selectWorksByIdsOrdered(@Param("ids") List<Long> ids);
+
     int softDeleteWork(@Param("id") Long id);
 
     WorkDTO selectWork(@Param("id") Long id);

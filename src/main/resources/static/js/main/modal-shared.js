@@ -125,7 +125,7 @@ let MODAL_KAKAO_ICON_SVG = '<svg class="modal__social-icon" viewBox="0 0 48 48">
           '<p>회사는 개인정보의 안전성 확보를 위해 다음 조치를 취하고 있습니다.<br>' +
           '- 비밀번호 암호화 저장<br>' +
           '- 개인정보 접근 권한 제한<br>' +
-          '- SSL/TLS 암호화 통신 적용<br>' +
+          '- SSSL/TLS 암호화 통신 적용<br>' +
           '- 정기적 보안 점검 실시</p>' +
 
           '<h3>7. 이용자의 권리</h3>' +

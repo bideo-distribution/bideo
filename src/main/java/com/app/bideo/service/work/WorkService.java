@@ -21,8 +21,12 @@ import com.app.bideo.repository.auction.AuctionDAO;
 import com.app.bideo.repository.interaction.BookmarkDAO;
 import com.app.bideo.service.interaction.CommentService;
 import com.app.bideo.service.common.S3FileService;
+import com.app.bideo.service.embedding.EmbeddingApiClient;
 import com.app.bideo.service.llm.LlmDescribeApiClient;
 import com.app.bideo.service.notification.NotificationService;
+import com.app.bideo.service.search.SemanticSearchApiClient;
+import com.app.bideo.service.watermark.WatermarkApiClient;
+import com.app.bideo.service.watermark.WatermarkApiClient.WatermarkedFile;
 import com.app.bideo.repository.gallery.GalleryDAO;
 import com.app.bideo.repository.work.WorkDAO;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +59,9 @@ public class WorkService {
     private final NotificationService notificationService;
     private final S3FileService s3FileService;
     private final LlmDescribeApiClient llmDescribeApiClient;
+    private final WatermarkApiClient watermarkApiClient;
+    private final EmbeddingApiClient embeddingApiClient;
+    private final SemanticSearchApiClient semanticSearchApiClient;
 
     // 작품 등록 후 파일/태그까지 함께 저장한다.
     @CacheEvict(value = {"dashboard", "profile"}, allEntries = true)
@@ -100,17 +107,52 @@ public class WorkService {
                 .build();
 
         workDAO.save(workDTO);
-        saveThumbnailFile(workDTO.getId(), thumbnailFile);
-        saveMediaFile(workDTO.getId(), mediaFile, thumbnailFile != null && !thumbnailFile.isEmpty() ? 1 : 0);
+        saveThumbnailFile(workDTO.getId(), thumbnailFile, resolvedMemberId);
+        saveMediaFile(workDTO.getId(), mediaFile, thumbnailFile != null && !thumbnailFile.isEmpty() ? 1 : 0, resolvedMemberId);
         saveTags(workDTO.getId(), requestDTO.getTagIds(), requestDTO.getTagNames());
         saveGalleryLink(galleryId, workDTO.getId());
         saveAuctionIfRequested(workDTO.getId(), resolvedMemberId, requestDTO.getPrice(), requestDTO.getAuctionEnabled(), requestDTO.getAuctionStartingPrice(), requestDTO.getAuctionDeadlineHours());
+        // 시맨틱 검색용 임베딩 — 등록 흐름의 마지막 단계. 실패해도 등록은 성공.
+        indexForSemanticSearch(workDTO.getId(), requestDTO.getTitle(), category,
+                               requestDTO.getDescription(), llmAnswer);
 
         return WorkCreateResponseDTO.builder()
                 .id(workDTO.getId())
                 .galleryId(galleryId)
                 .redirectUrl("/profile?tab=works")
                 .build();
+    }
+
+    /**
+     * 작품 텍스트(제목 + 카테고리 + 설명 + LLM 묘사) 를 임베딩해 DB 에 저장 + FastAPI 검색 인덱스에 push.
+     * 실패는 등록을 막지 않음 — 다음 refresh / 백필에서 따라잡힘.
+     */
+    private void indexForSemanticSearch(Long workId, String title, String category,
+                                        String description, String llmAnswer) {
+        if (workId == null) {
+            return;
+        }
+        String text = buildSearchText(title, category, description, llmAnswer);
+        if (text.isBlank()) {
+            return;
+        }
+        try {
+            embeddingApiClient.embed(text).ifPresent(vec -> {
+                workDAO.updateEmbedding(workId, vec);
+                semanticSearchApiClient.addToIndex(workId, vec);
+            });
+        } catch (Exception e) {
+            // 임베딩/검색 라우터 어떤 단계 실패든 흡수
+        }
+    }
+
+    private String buildSearchText(String title, String category, String description, String llmAnswer) {
+        StringBuilder sb = new StringBuilder();
+        if (title != null && !title.isBlank())       sb.append(title).append('\n');
+        if (category != null && !category.isBlank()) sb.append(category).append('\n');
+        if (description != null && !description.isBlank()) sb.append(description).append('\n');
+        if (llmAnswer != null && !llmAnswer.isBlank())     sb.append(llmAnswer);
+        return sb.toString().trim();
     }
 
     private String describeWithLlm(MultipartFile mediaFile, MultipartFile thumbnailFile, String title) {
@@ -283,9 +325,9 @@ public class WorkService {
 
         if ((mediaFile != null && !mediaFile.isEmpty()) || (thumbnailFile != null && !thumbnailFile.isEmpty())) {
             workDAO.deleteFilesByWorkId(id);
-            saveThumbnailFile(id, thumbnailFile);
+            saveThumbnailFile(id, thumbnailFile, resolvedMemberId);
             if (mediaFile != null && !mediaFile.isEmpty()) {
-                saveMediaFile(id, mediaFile, thumbnailFile != null && !thumbnailFile.isEmpty() ? 1 : 0);
+                saveMediaFile(id, mediaFile, thumbnailFile != null && !thumbnailFile.isEmpty() ? 1 : 0, resolvedMemberId);
             }
         } else if (requestDTO.getFiles() != null) {
             workDAO.deleteFilesByWorkId(id);
@@ -569,27 +611,27 @@ public class WorkService {
         return null;
     }
 
-    // 업로드한 파일을 S3 경로로 저장한다.
-    private void saveMediaFile(Long workId, MultipartFile mediaFile, int sortOrder) {
+    // 업로드한 파일을 S3 경로로 저장한다. 가능하면 FastAPI 워터마크를 박은 뒤 저장한다.
+    private void saveMediaFile(Long workId, MultipartFile mediaFile, int sortOrder, Long ownerId) {
         if (mediaFile == null || mediaFile.isEmpty()) {
             return;
         }
 
-        String contentType = mediaFile.getContentType() != null ? mediaFile.getContentType() : "application/octet-stream";
-        String uploadedFileKey = s3FileService.upload("works", mediaFile);
+        String originalContentType = mediaFile.getContentType() != null ? mediaFile.getContentType() : "application/octet-stream";
+        WatermarkUploadResult result = uploadWithWatermark("works", mediaFile, ownerId, originalContentType);
 
         workDAO.saveFile(
                 WorkFileVO.builder()
                         .workId(workId)
-                        .fileUrl(uploadedFileKey)
-                        .fileType(contentType)
-                        .fileSize((int) mediaFile.getSize())
+                        .fileUrl(result.key())
+                        .fileType(result.contentType())
+                        .fileSize(result.size())
                         .sortOrder(sortOrder)
                         .build()
         );
     }
 
-    private void saveThumbnailFile(Long workId, MultipartFile thumbnailFile) {
+    private void saveThumbnailFile(Long workId, MultipartFile thumbnailFile, Long ownerId) {
         if (thumbnailFile == null || thumbnailFile.isEmpty()) {
             return;
         }
@@ -599,17 +641,43 @@ public class WorkService {
             throw new IllegalArgumentException("thumbnail image only");
         }
 
-        String uploadedFileKey = s3FileService.upload("works", thumbnailFile);
+        WatermarkUploadResult result = uploadWithWatermark("works", thumbnailFile, ownerId, contentType);
+
         workDAO.saveFile(
                 WorkFileVO.builder()
                         .workId(workId)
-                        .fileUrl(uploadedFileKey)
-                        .fileType(contentType)
-                        .fileSize((int) thumbnailFile.getSize())
+                        .fileUrl(result.key())
+                        .fileType(result.contentType())
+                        .fileSize(result.size())
                         .sortOrder(0)
                         .build()
         );
     }
+
+    /**
+     * FastAPI 워터마크 박힌 bytes 를 S3 에 올린다. 실패 시 원본 그대로 업로드 (graceful degradation).
+     * 작품 등록을 막지 않는 부가 기능이라 어떤 실패든 흡수.
+     */
+    private WatermarkUploadResult uploadWithWatermark(String directory, MultipartFile file,
+                                                       Long ownerId, String originalContentType) {
+        WatermarkedFile wm = null;
+        if (ownerId != null) {
+            wm = watermarkApiClient.embed(file, ownerId)
+                    .blockOptional(Duration.ofSeconds(60))
+                    .orElse(null);
+        }
+
+        if (wm != null && wm.bytes() != null && wm.bytes().length > 0) {
+            String key = s3FileService.upload(directory, wm.bytes(), wm.contentType(), wm.ext());
+            return new WatermarkUploadResult(key, wm.contentType(), wm.bytes().length);
+        }
+
+        // fallback — 원본 그대로
+        String key = s3FileService.upload(directory, file);
+        return new WatermarkUploadResult(key, originalContentType, (int) file.getSize());
+    }
+
+    private record WatermarkUploadResult(String key, String contentType, int size) {}
 
     private String resolveCategory(String category, MultipartFile mediaFile) {
         if (mediaFile != null && !mediaFile.isEmpty() && mediaFile.getContentType() != null) {
