@@ -4,6 +4,11 @@ server:
     session:
       tracking-modes: cookie
   forward-headers-strategy: native
+  tomcat:
+    # multipart 업로드 시 Tomcat 자체 한도가 더 작으면 connector 가 stream 을 미리 끊어
+    # "Stream ended unexpectedly" 가 발생함. Spring multipart 한도와 같이 풀어준다.
+    max-http-form-post-size: 100MB
+    max-swallow-size: 100MB
 
 spring:
   datasource:
@@ -36,9 +41,9 @@ spring:
   servlet:
     multipart:
       enabled: true
-      file-size-threshold: 10MB
-      max-file-size: 20MB
-      max-request-size: 20MB
+      file-size-threshold: 2MB    # 메모리→디스크 임계점 — 작게 잡아 큰 파일은 임시파일로 빨리 옮김
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 mybatis:
   mapper-locations: classpath*:mapper/**/*.xml

@@ -909,3 +909,22 @@ body:has(.artwork-dialog-backdrop:not([hidden]))::after {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ===== Dark Mode 보정 — 알림 드롭다운 =====
+   shell.css 본문이 'white' 와 mix 하는 hardcoded 표현을 써서 다크 토글이 안 먹는 곳들이
+   있어 별도 오버라이드.  cf. theme.css 가 yt-spec-* 변수는 이미 다크 매핑함. */
+:root[data-theme="dark"] .bd-shell__notification-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+:root[data-theme="dark"] .bd-shell__notification-item.is-unread {
+  background: color-mix(in srgb, var(--bd-chat-accent, #9D4EDD) 18%, var(--bd-color-bg, #0f0f0f));
+}
+
+:root[data-theme="dark"] .bd-shell__notification-item.is-unread:hover {
+  background: color-mix(in srgb, var(--bd-chat-accent, #9D4EDD) 26%, var(--bd-color-bg, #0f0f0f));
+}
+
+:root[data-theme="dark"] .bd-shell__notification-empty {
+  color: #888;
+}

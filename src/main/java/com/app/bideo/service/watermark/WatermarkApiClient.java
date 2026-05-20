@@ -74,6 +74,70 @@ public class WatermarkApiClient {
     /** 워터마크 적용 결과 — bytes + 새 확장자(예: .png, .mp4) + content-type. */
     public record WatermarkedFile(byte[] bytes, String ext, String contentType) {}
 
+    /** 워터마크 추출 결과 — payload(member_id 10진수 문자열), valid, rawHex, source. */
+    public record ExtractedResult(String payload, boolean valid, String rawHex, String source) {}
+
+    /**
+     * FastAPI /api/watermark/extract 호출 → 추출된 payload 반환. 실패 시 Mono.empty().
+     * 검증 페이지(/watermark/verify) 가 사용.
+     */
+    public Mono<ExtractedResult> extract(byte[] fileBytes, String contentType, String filename) {
+        if (fileBytes == null || fileBytes.length == 0) {
+            return Mono.empty();
+        }
+
+        MultipartBodyBuilder builder = new MultipartBodyBuilder();
+        ByteArrayResource part = new ByteArrayResource(fileBytes) {
+            @Override
+            public String getFilename() {
+                return filename != null ? filename : "media.bin";
+            }
+
+            @Override
+            public long contentLength() {
+                return fileBytes.length;
+            }
+        };
+        builder.part("image", part).contentType(parseContentTypeStr(contentType));
+
+        return mlApiWebClient.post()
+                .uri("/api/watermark/extract")
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(BodyInserters.fromMultipartData(builder.build()))
+                .retrieve()
+                .bodyToMono(new org.springframework.core.ParameterizedTypeReference<java.util.Map<String, Object>>() {})
+                .map(body -> {
+                    if (body == null) {
+                        return new ExtractedResult(null, false, null, null);
+                    }
+                    Object payload = body.get("payload");
+                    Object valid   = body.get("valid");
+                    Object rawHex  = body.get("raw_hex");
+                    Object source  = body.get("source");
+                    return new ExtractedResult(
+                            payload == null ? null : payload.toString(),
+                            valid instanceof Boolean b && b,
+                            rawHex == null ? null : rawHex.toString(),
+                            source == null ? null : source.toString()
+                    );
+                })
+                .onErrorResume(e -> {
+                    log.warn("[Watermark] extract 호출 실패: {}", e.getMessage());
+                    return Mono.empty();
+                });
+    }
+
+    private MediaType parseContentTypeStr(String contentType) {
+        if (contentType == null || contentType.isBlank()) {
+            return MediaType.APPLICATION_OCTET_STREAM;
+        }
+        try {
+            return MediaType.parseMediaType(contentType);
+        } catch (Exception e) {
+            return MediaType.APPLICATION_OCTET_STREAM;
+        }
+    }
+
     private ByteArrayResource asFilePart(MultipartFile file) throws IOException {
         byte[] bytes = file.getBytes();
         String filename = file.getOriginalFilename() != null

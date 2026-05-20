@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{layout/layout :: ytShellHead('BIDEO | 워터마크 검증')}"></th:block>
+    <link rel="stylesheet" href="/css/common/reset.css" th:href="@{/css/common/reset.css}"/>
+    <link rel="stylesheet" href="/css/common/global.css" th:href="@{/css/common/global.css}"/>
+    <link rel="stylesheet" href="/css/common/util.css" th:href="@{/css/common/util.css}"/>
+    <link rel="stylesheet" href="/css/common/common.css" th:href="@{/css/common/common.css}"/>
+    <link rel="stylesheet" href="/css/watermark/verify.css" th:href="@{/css/watermark/verify.css}"/>
+    <script defer src="/js/watermark/verify.js" th:src="@{/js/watermark/verify.js}"></script>
+</head>
+<body>
+<div th:replace="~{layout/layout :: ytShellChrome('watermark')}"></div>
+<main class="bd-shell__page-content">
+    <section class="Watermark-Page">
+        <header class="Watermark-Header">
+            <h1 class="Watermark-Title">워터마크 검증</h1>
+            <p class="Watermark-Subtitle">
+                BIDEO 에 등록된 작품에는 작가의 식별자가 비가시성 워터마크(DWT-DCT)로 삽입됩니다.
+                파일을 업로드해 작품의 진짜 작가를 확인하세요.
+            </p>
+        </header>
+
+        <div class="Watermark-Card">
+            <form id="watermarkForm" class="Watermark-Form" enctype="multipart/form-data">
+                <label class="Watermark-Drop" for="watermarkFile" data-watermark-drop>
+                    <input id="watermarkFile" name="file" type="file"
+                           accept="image/*,video/*" class="Watermark-Input" required/>
+                    <div class="Watermark-DropInner" data-watermark-drop-inner>
+                        <svg class="Watermark-DropIcon" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true">
+                            <path d="M12 16V8m0 0l-4 4m4-4l4 4M5 20h14"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="1.6"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                        </svg>
+                        <p class="Watermark-DropTitle">이미지 또는 영상을 끌어다 놓거나 클릭해서 선택</p>
+                        <p class="Watermark-DropHint">PNG · JPG · MP4 · WEBM 지원</p>
+                    </div>
+                    <div class="Watermark-Preview" hidden data-watermark-preview>
+                        <img alt="preview" data-watermark-preview-image hidden/>
+                        <video controls muted data-watermark-preview-video hidden></video>
+                        <p class="Watermark-PreviewName" data-watermark-preview-name></p>
+                    </div>
+                </label>
+
+                <button type="submit" class="Watermark-Submit" data-watermark-submit>
+                    워터마크 검증
+                </button>
+            </form>
+
+            <div class="Watermark-Result" hidden data-watermark-result>
+                <div class="Watermark-Status" data-watermark-status></div>
+                <div class="Watermark-CreatorCard" hidden data-watermark-creator>
+                    <a class="Watermark-CreatorLink" data-watermark-creator-link href="#">
+                        <img class="Watermark-CreatorImage" data-watermark-creator-image
+                             src="/images/default-profile.svg" alt="creator"/>
+                        <div class="Watermark-CreatorMeta">
+                            <span class="Watermark-CreatorName" data-watermark-creator-name></span>
+                            <span class="Watermark-CreatorTag" data-watermark-creator-id></span>
+                        </div>
+                        <span class="Watermark-CreatorBadge" hidden data-watermark-creator-verified>인증 작가</span>
+                    </a>
+                </div>
+                <p class="Watermark-Message" data-watermark-message></p>
+            </div>
+        </div>
+
+        <section class="Watermark-Info">
+            <h2 class="Watermark-InfoTitle">검증 작동 방식</h2>
+            <ul class="Watermark-InfoList">
+                <li>이미지 등록 시 DWT-DCT 주파수 도메인에 작가 식별자가 비가시 삽입됩니다.</li>
+                <li>영상은 1초당 1프레임에 워터마크를 박고, 검증 시 여러 프레임을 다수결로 추출합니다.</li>
+                <li>SNS 재업로드, 화질 압축, 일부 자르기에도 워터마크가 살아남도록 설계되어 있습니다.</li>
+                <li>심한 압축이나 큰 크롭, 화면 녹화 등은 워터마크를 손상시킬 수 있습니다.</li>
+            </ul>
+        </section>
+    </section>
+</main>
+</body>
+</html>
