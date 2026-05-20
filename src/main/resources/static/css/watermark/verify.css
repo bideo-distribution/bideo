@@ -10,7 +10,7 @@
 .Watermark-Page {
     max-width: 720px;
     margin: 32px auto 80px;
-    padding: 0 24px;
+    padding: 100px 24px;
     color: var(--yt-spec-text-primary, #0f0f0f);
 }
 

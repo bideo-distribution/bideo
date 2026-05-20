@@ -159,6 +159,11 @@ window.addEventListener("load", function () {
       })
       .then(function (data) {
         if (!data) return;
+        // 기존 rooms 의 messages 를 id 별로 캐싱 — loadRooms 가 통째로 갈아끼우면서
+        // active 채팅방의 messages 가 빈 배열로 초기화되어 화면에서 사라지는 문제 방지.
+        let prevMessages = {};
+        rooms.forEach(function (r) { if (r && r.id != null) prevMessages[r.id] = r.messages || []; });
+
         rooms = data.map(function (room) {
           let otherMember = room.members && room.members.length > 0 ? room.members[0] : null;
           return {
@@ -169,7 +174,7 @@ window.addEventListener("load", function () {
             preview: room.lastMessage || "",
             time: formatTime(room.lastMessageAt),
             unreadCount: room.unreadCount || 0,
-            messages: []
+            messages: prevMessages[room.id] || []
           };
         });
         renderRoomList(roomSearchInput ? roomSearchInput.value : "");
@@ -231,6 +236,16 @@ window.addEventListener("load", function () {
     return layer.classList.contains("is-open");
   }
 
+  // broadcast 페이로드는 viewer 의존 필드를 null 로 sanitize 해서 옴.
+  // 기존 메시지 객체에 merge 하되, null 인 필드는 기존 값을 보존.
+  function mergeBroadcastMessage(prev, incoming) {
+    let merged = Object.assign({}, prev, incoming);
+    ["isLiked", "canEdit", "canDelete", "isSelf"].forEach(function (k) {
+      if (incoming[k] == null && prev != null && prev[k] != null) merged[k] = prev[k];
+    });
+    return merged;
+  }
+
   function handleRealtimeEvent(event) {
     if (isChatPanelOpen() && String(event.roomId) === String(activeRoomId)) {
       let room = findRoom(activeRoomId);
@@ -242,7 +257,9 @@ window.addEventListener("load", function () {
         } else {
           let idx = room.messages.findIndex(function (m) { return m.id === event.message.id; });
           if (idx >= 0) {
-            room.messages[idx] = event.message;
+            // broadcast 페이로드는 viewer 의존 필드(isSelf/canEdit/canDelete/isLiked) 가 null.
+            // 통째로 교체하면 기존 viewer-relative 값이 사라짐 → 기존 객체에 merge 해 복원.
+            room.messages[idx] = mergeBroadcastMessage(room.messages[idx], event.message);
             renderMessages(room);
           }
         }
@@ -305,16 +322,22 @@ window.addEventListener("load", function () {
   function renderMessages(room) {
     messagesNode.innerHTML = room.messages
       .map(function (msg) {
-        let isSelf = msg.isSelf || msg.canEdit || msg.canDelete;
+        // broadcast 페이로드의 isSelf/canEdit/canDelete 는 sender 컨텍스트로 박혀와서
+        // 양쪽 모두 self 처럼 보이는 버그가 있음. 현재 사용자 id 와 senderId 직접 비교.
+        let isSelf = currentUserId != null && msg.senderId != null
+                && String(msg.senderId) === String(currentUserId);
         let klass = isSelf ? "bd-chat-bubble bd-chat-bubble--self" : "bd-chat-bubble";
         let body = msg.deleted ? "<em>삭제된 메시지</em>" : escapeHtml(msg.content || "");
         let hasAnyLike = msg.isLiked || msg.likeCount > 0;
         let likedClass = hasAnyLike ? " is-liked" : "";
         let actionsClass = "bd-chat-bubble__actions" + (hasAnyLike ? " has-liked" : "");
 
+        // canDelete/canEdit 도 broadcast 페이로드는 sender 기준이라 받는 쪽도 true 가 옴.
+        // self 아닌 경우 무조건 false 로 강제.
+        let canDelete = isSelf && msg.canDelete;
         let actionsHtml = '';
         if (!msg.deleted) {
-          let deleteBtn = msg.canDelete
+          let deleteBtn = canDelete
             ? '<button class="bd-chat-bubble__action bd-chat-bubble__action--delete" data-msg-id="' + msg.id + '" type="button" title="삭제">' +
               '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>' +
               '</button>'

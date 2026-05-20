@@ -248,10 +248,42 @@ public class MessageService {
                 MessageRealtimeEventDTO.builder()
                         .roomId(roomId)
                         .type(type)
-                        .message(message)
+                        .message(sanitizeForBroadcast(message))
                         .build()
         );
         broadcastRoomTouch(roomId);
+    }
+
+    /**
+     * 같은 페이로드가 방의 모든 구독자에게 fanout 되는 broadcast 의 특성상
+     * viewer 컨텍스트 의존 필드(isSelf / canEdit / canDelete / isLiked) 를 그대로 실어 보내면
+     * 받는 쪽도 sender 기준 값을 self 로 잘못 인식함.
+     * 해당 4개 필드만 null 로 무효화한 사본을 발송 — 클라가 senderId 비교로 자체 판단.
+     */
+    private MessageResponseDTO sanitizeForBroadcast(MessageResponseDTO src) {
+        if (src == null) return null;
+        return MessageResponseDTO.builder()
+                .id(src.getId())
+                .messageRoomId(src.getMessageRoomId())
+                .senderId(src.getSenderId())
+                .senderNickname(src.getSenderNickname())
+                .senderProfileImage(src.getSenderProfileImage())
+                .content(src.getContent())
+                .isRead(src.getIsRead())
+                .updatedDatetime(src.getUpdatedDatetime())
+                .edited(src.getEdited())
+                .deleted(src.getDeleted())
+                .replyToMessageId(src.getReplyToMessageId())
+                .replyPreview(src.getReplyPreview())
+                .replySenderNickname(src.getReplySenderNickname())
+                .likeCount(src.getLikeCount())
+                .createdDatetime(src.getCreatedDatetime())
+                // viewer 의존 — 의도적으로 null. 받는 쪽이 senderId 비교로 자체 판단.
+                .isLiked(null)
+                .canEdit(null)
+                .canDelete(null)
+                .isSelf(null)
+                .build();
     }
 
     private void broadcastRoomTouch(Long roomId) {
