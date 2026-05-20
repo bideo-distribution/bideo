@@ -213,3 +213,25 @@ input {
         font-size: 11px;
     }
 }
+
+/* ===== Dark Mode =====
+   BIDEO 글로벌 토글 <html data-theme="dark"> 에 맞춘 알림 페이지 색 보정.
+   1) 변수 자체를 다크 톤으로 오버라이드 → 변수 기반 셀렉터는 자동 적용.
+   2) 직접 색 박힌 셀렉터는 개별 오버라이드. */
+:root[data-theme="dark"] .notification-page {
+    --bg:        #0f0f0f;
+    --surface:   #1f1f1f;
+    --line:      #303030;
+    --line-soft: #2a2a2a;
+    --text:      #f1f1f1;
+    --muted:     #aaaaaa;
+}
+
+:root[data-theme="dark"] .notification-page         { background: var(--bg); color: var(--text); }
+:root[data-theme="dark"] .back-button               { color: var(--text); }
+:root[data-theme="dark"] .option-item               { color: var(--text); }
+:root[data-theme="dark"] .radio-mark                { background: #2a2a2a; }
+:root[data-theme="dark"] .option-item input:checked + .radio-mark::after { background: #fffcf2; }
+:root[data-theme="dark"] .switch-slider             { background: #4a4a4a; }
+:root[data-theme="dark"] .switch-slider::after      { background: #1f1f1f; }
+:root[data-theme="dark"] .notification-header      { border-bottom-color: var(--line-soft); }
