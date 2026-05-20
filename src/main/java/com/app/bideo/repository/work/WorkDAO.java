@@ -165,6 +165,29 @@ public class WorkDAO {
         workMapper.updateWork(workDTO);
     }
 
+    /** 시맨틱 검색 결과 work_id 리스트로 작품 메타 일괄 조회 — 입력 순서 보존. */
+    public List<WorkListResponseDTO> findByIdsOrdered(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return java.util.Collections.emptyList();
+        }
+        return workMapper.selectWorksByIdsOrdered(ids);
+    }
+
+    /** 작품 임베딩 저장 — double[] 을 Postgres array 리터럴(`{0.1,-0.2,...}`) 로 직렬화해 저장. */
+    public int updateEmbedding(Long workId, double[] embedding) {
+        if (workId == null || embedding == null || embedding.length == 0) {
+            return 0;
+        }
+        StringBuilder sb = new StringBuilder(embedding.length * 12);
+        sb.append('{');
+        for (int i = 0; i < embedding.length; i++) {
+            if (i > 0) sb.append(',');
+            sb.append(embedding[i]);
+        }
+        sb.append('}');
+        return workMapper.updateEmbedding(workId, sb.toString());
+    }
+
     // 작품 파일 전체 삭제
     public void deleteFilesByWorkId(Long workId) {
         workMapper.deleteWorkFilesByWorkId(workId);

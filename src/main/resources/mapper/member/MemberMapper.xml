@@ -100,6 +100,19 @@
           and status != 'DELETED'
     </select>
 
+    <select id="selectFirstFollowAt" resultType="java.time.LocalDateTime">
+        select min(created_datetime)
+        from tbl_follow
+        where following_id = #{memberId}
+    </select>
+
+    <select id="countFollowersBefore" resultType="int">
+        select count(*)
+        from tbl_follow
+        where following_id = #{memberId}
+          and created_datetime &lt;= #{before}
+    </select>
+
     <select id="findOwnedBadgesByMemberId" resultType="com.app.bideo.dto.member.MemberBadgeResponseDTO">
         select
             mb.id,

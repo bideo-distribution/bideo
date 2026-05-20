@@ -8,6 +8,7 @@ import com.app.bideo.mapper.member.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +65,16 @@ public class MemberRepository {
     // 공개 작품 수 조회
     public int countActiveWorksByMemberId(Long memberId) {
         return memberMapper.countActiveWorksByMemberId(memberId);
+    }
+
+    // 첫 팔로워 시점 — 팔로워 성장 회귀의 데뷔 기준
+    public Optional<LocalDateTime> findFirstFollowAt(Long memberId) {
+        return Optional.ofNullable(memberMapper.selectFirstFollowAt(memberId));
+    }
+
+    // 특정 시점까지의 누적 팔로워 수
+    public int countFollowersBefore(Long memberId, LocalDateTime before) {
+        return memberMapper.countFollowersBefore(memberId, before);
     }
 
     // 보유 뱃지 조회

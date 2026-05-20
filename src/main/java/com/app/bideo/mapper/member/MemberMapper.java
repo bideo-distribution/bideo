@@ -7,6 +7,7 @@ import com.app.bideo.dto.member.MemberListResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,13 @@ public interface MemberMapper {
 
     // 공개 작품 수 조회
     int countActiveWorksByMemberId(@Param("memberId") Long memberId);
+
+    // 팔로워 성장 회귀 — 첫 팔로워 시점
+    LocalDateTime selectFirstFollowAt(@Param("memberId") Long memberId);
+
+    // 팔로워 성장 회귀 — 특정 시점까지의 누적 팔로워 수
+    int countFollowersBefore(@Param("memberId") Long memberId,
+                             @Param("before") LocalDateTime before);
 
     // 보유 뱃지 조회
     List<MemberBadgeResponseDTO> findOwnedBadgesByMemberId(@Param("memberId") Long memberId);

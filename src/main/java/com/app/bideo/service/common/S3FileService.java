@@ -55,6 +55,31 @@ public class S3FileService {
     }
 
     /**
+     * 가공된 bytes 를 그대로 업로드 (워터마크 박힌 파일처럼 MultipartFile 이 아닌 raw bytes).
+     */
+    public String upload(String directory, byte[] bytes, String contentType, String extension) {
+        requireBucket();
+
+        String ext = extension == null || extension.isBlank()
+                ? ""
+                : (extension.startsWith(".") ? extension : "." + extension);
+        String key = directory + "/" + UUID.randomUUID() + ext;
+
+        try {
+            PutObjectRequest putRequest = PutObjectRequest.builder()
+                    .bucket(bucket)
+                    .key(key)
+                    .contentType(contentType != null ? contentType : "application/octet-stream")
+                    .build();
+
+            s3Client.putObject(putRequest, RequestBody.fromBytes(bytes));
+            return key;
+        } catch (Exception e) {
+            throw new IllegalStateException("S3 업로드에 실패했습니다.", e);
+        }
+    }
+
+    /**
      * S3 키에 대해 Pre-signed URL을 생성한다.
      * 외부 URL(http, https), data/blob URI는 그대로 반환한다.
      * null/blank는 null 반환.
