@@ -1,4 +1,51 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // 결제 완료 후 redirect 신호 (?paid=1) 감지 → 토스트 1회 노출 + URL 정리
+  (function showPaidToastIfNeeded() {
+    let params = new URLSearchParams(window.location.search);
+    if (params.get('paid') !== '1') return;
+
+    // 동일 토스트 중복 방지
+    if (document.querySelector('[data-bd-paid-toast]')) return;
+
+    let toast = document.createElement('div');
+    toast.setAttribute('data-bd-paid-toast', '');
+    toast.textContent = '결제가 완료되었습니다.';
+    Object.assign(toast.style, {
+      position: 'fixed',
+      top: '24px',
+      left: '50%',
+      transform: 'translateX(-50%) translateY(-8px)',
+      zIndex: '9999',
+      padding: '12px 22px',
+      borderRadius: '999px',
+      background: 'rgba(15,15,15,0.92)',
+      color: '#fff',
+      fontSize: '14px',
+      fontWeight: '600',
+      boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
+      opacity: '0',
+      transition: 'opacity 0.25s ease, transform 0.25s ease',
+      pointerEvents: 'none',
+    });
+    document.body.appendChild(toast);
+    requestAnimationFrame(function () {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    });
+    setTimeout(function () {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(-8px)';
+      setTimeout(function () { toast.remove(); }, 300);
+    }, 2400);
+
+    // 새로고침 / 뒤로가기 시 다시 안 뜨도록 query 제거
+    params.delete('paid');
+    let cleanUrl = window.location.pathname +
+        (params.toString() ? '?' + params.toString() : '') +
+        window.location.hash;
+    window.history.replaceState({}, '', cleanUrl);
+  })();
+
   // 대시보드 상태 관리
   let state = {
     dashboard: null,

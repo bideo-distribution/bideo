@@ -89,10 +89,8 @@ public class OrderService {
 
         orderDAO.save(orderVO);
 
-        notificationService.createNotification(
-                sellerId, buyerId, "ORDER", "ORDER",
-                orderVO.getId(), "새로운 주문이 접수되었습니다."
-        );
+        // 주문 생성(결제 전) 시점에는 판매자에게 알림을 보내지 않는다.
+        // 결제 완료(PaymentService.completePayment) 에서 작품 제목과 함께 단일 알림으로 발송.
 
         return orderDAO.findById(orderVO.getId())
                 .orElseThrow(() -> new IllegalStateException("주문 생성 후 조회 실패"));
