@@ -103,4 +103,13 @@
           AND member_id = #{memberId}
     </delete>
 
+    <!-- 같은 (받는사람, 보낸사람, 타입) 알림 모두 삭제. 팔로우 / 좋아요 같이 반복 토글되는
+         알림 타입에서 새 알림 띄우기 전 옛 알림 정리할 때 사용. -->
+    <delete id="deleteByMemberAndSenderAndType">
+        DELETE FROM tbl_notification
+        WHERE member_id = #{memberId}
+          AND sender_id = #{senderId}
+          AND noti_type = #{notiType}
+    </delete>
+
 </mapper>

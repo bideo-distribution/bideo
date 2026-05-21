@@ -37,4 +37,8 @@ public class NotificationDAO {
     public void delete(Long id, Long memberId) {
         notificationMapper.deleteNotification(id, memberId);
     }
+
+    public int deleteByMemberAndSenderAndType(Long memberId, Long senderId, String notiType) {
+        return notificationMapper.deleteByMemberAndSenderAndType(memberId, senderId, notiType);
+    }
 }

@@ -35,7 +35,8 @@ public class FollowService {
             followDAO.increaseFollowerCount(followingId);
             followDAO.increaseFollowingCount(followerId);
 
-            notificationService.createNotification(
+            // 같은 사람의 옛 FOLLOW 알림이 있으면 지우고 새로 띄움 — 토글 반복 시 누적 방지.
+            notificationService.replaceNotification(
                     followingId, followerId, "FOLLOW", "MEMBER", followerId,
                     "회원님을 팔로우했습니다."
             );
