@@ -32,6 +32,11 @@ public class OrderDAO {
         return orderMapper.selectLatestPendingByBuyerAndWork(buyerId, workId, orderType);
     }
 
+    /** 다운로드 권한 체크 — buyer 가 해당 work 의 PAID/COMPLETED 주문을 가졌는지. */
+    public boolean existsPaidByBuyerAndWork(Long buyerId, Long workId) {
+        return orderMapper.existsPaidByBuyerAndWork(buyerId, workId);
+    }
+
     public List<OrderListResponseDTO> findByBuyerId(Long buyerId, int offset, int limit) {
         return orderMapper.selectByBuyerId(buyerId, offset, limit);
     }

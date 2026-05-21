@@ -29,6 +29,45 @@ public class WatermarkApiClient {
 
     private final WebClient mlApiWebClient;
 
+    /**
+     * raw bytes 버전 — 구매자별 워터마크 재적용 시 사용 (S3 다운로드한 바이트에 다시 박음).
+     * 실패 시 Mono.empty().
+     */
+    public Mono<WatermarkedFile> embed(byte[] bytes, String contentType, String filename, Long memberId) {
+        if (bytes == null || bytes.length == 0 || memberId == null) {
+            return Mono.empty();
+        }
+        String payload = String.format("%08d", memberId % 100_000_000L);
+
+        MultipartBodyBuilder builder = new MultipartBodyBuilder();
+        ByteArrayResource part = new ByteArrayResource(bytes) {
+            @Override public String getFilename() { return filename != null ? filename : "media.bin"; }
+            @Override public long contentLength() { return bytes.length; }
+        };
+        builder.part("image", part).contentType(parseContentTypeStr(contentType));
+        builder.part("payload", payload);
+
+        return mlApiWebClient.post()
+                .uri("/api/watermark/embed")
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(BodyInserters.fromMultipartData(builder.build()))
+                .exchangeToMono(response -> {
+                    if (!response.statusCode().is2xxSuccessful()) {
+                        log.warn("[Watermark] embed(bytes) 응답 비정상 {}", response.statusCode());
+                        return response.releaseBody().then(Mono.empty());
+                    }
+                    String ext = response.headers().header("X-Watermark-Output-Ext").stream().findFirst().orElse(null);
+                    String ct = response.headers().contentType().map(MediaType::toString)
+                            .orElse(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+                    return response.bodyToMono(byte[].class)
+                            .map(b -> new WatermarkedFile(b, ext, ct));
+                })
+                .onErrorResume(e -> {
+                    log.warn("[Watermark] embed(bytes) 호출 실패: {}", e.getMessage());
+                    return Mono.empty();
+                });
+    }
+
     /** payload = 8 바이트 zero-pad member_id 문자열 (FastAPI contract). */
     public Mono<WatermarkedFile> embed(MultipartFile file, Long memberId) {
         if (file == null || file.isEmpty() || memberId == null) {

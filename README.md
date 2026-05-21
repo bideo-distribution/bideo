@@ -15,6 +15,9 @@
 | [5. 공통 레이아웃](#5-공통-레이아웃) | Thymeleaf fragment, 헤더·사이드바·채팅 FAB, 다크모드, 반응형 |
 | [6. 실시간 채팅](#6-실시간-채팅) | WebSocket + STOMP + RabbitMQ + 무한 스크롤 |
 | [7. 워터마크 검증 페이지](#7-워터마크-검증-페이지) | 업로드 파일에서 작가 식별자 추출 → 작가 카드 노출 |
+| [8. 알림](#8-알림) | 헤더 종 드롭다운 + 알림 페이지, 도메인 이벤트 발생 시 자동 생성 |
+| [9. 공모전](#9-공모전) | 등록 / 출품 / 주최자 우승작 선정 / 자동 알림 |
+| [10. 찜](#10-찜) | 작품·공모전 다형성 북마크, 토글 + 내 찜 목록 |
 
 ---
 
@@ -646,6 +649,201 @@ drop.addEventListener('drop', e => {
   FastAPI extract 결과만 사용.
 - 구버전 verify.html 의 `yt-shell__page-content` → 우리 워크스페이스 컨벤션 `bd-shell__page-content` 로 클래스명 통일.
 - 메뉴 진입점은 사이드바가 아닌 프로필 드롭다운에 배치 (재논의 결과).
+
+---
+
+## 8. 알림
+
+도메인 이벤트(거래·경매·결제·환불·댓글·좋아요·팔로우·공모전 우승 등) 가 발생하면 `NotificationService.createNotification` 으로 한 줄짜리 알림 row 가 DB 에 쌓이고, 헤더의 종 아이콘 드롭다운 + 전용 알림 페이지(`/notifications`) 에서 노출.
+
+### 핵심 진입점
+
+```java
+public void createNotification(Long memberId, Long senderId, String notiType,
+                               String targetType, Long targetId, String message) {
+    if (senderId != null && senderId.equals(memberId)) return;          // 셀프 알림 차단
+    if (!isNotificationEnabled(memberId, notiType)) return;             // 사용자 설정 존중
+    notificationDAO.save(NotificationVO.builder()
+            .memberId(memberId).senderId(senderId)
+            .notiType(notiType).targetType(targetType).targetId(targetId)
+            .message(message).build());
+}
+```
+
+- **`memberId`** = 받는 사람 / **`senderId`** = 보낸 사람 (둘이 같으면 자기 자신에게 안 보냄)
+- **`notiType`**: `SALE` · `REFUND` · `LIKE` · `COMMENT` · `FOLLOW` · `AUCTION_END` · `CONTEST_WIN` …
+- **`targetType` + `targetId`**: 클릭 시 라우팅 (예: `WORK 17` → `/work/detail/17`)
+
+알림 끄기 설정이 있는 사용자에겐 같은 type 의 알림은 차단 — `isNotificationEnabled` 가 `tbl_notification_setting` 조회.
+
+### 주요 알림 메시지 — 작품 제목 포함
+
+| 이벤트 | 메시지 |
+|---|---|
+| 결제 완료 (구매자→판매자) | `'○○○' 작품이 판매되었습니다.` |
+| 환불 처리 | `'○○○' 작품 결제가 환불 처리되었습니다.` |
+| 경매 낙찰 (구매자에게) | `경매에 낙찰되었습니다. 결제창에서 결제를 진행해주세요.` |
+| 공모전 우승작 선정 | `공모전 우승작으로 선정되었습니다.` |
+| 댓글 | `'○○○' 작품에 댓글을 남겼습니다: ...` |
+
+### 헤더 종 드롭다운
+
+레이아웃 fragment(`bd-shell__notification`) 에 페이지 어디서나 떠 있는 종 아이콘.
+- 안 읽은 개수만큼 빨간 배지 (`updateBadge`)
+- 클릭 시 드롭다운 패널 → 최신 알림 N개 미리보기 → 클릭하면 해당 `target` 으로 라우팅
+- "모두 읽음" 버튼
+
+### 🔧 트러블슈팅 — "거래만 해도 '새로운 주문이 접수되었습니다'"
+
+**증상**: 구매자가 결제 안 끝낸 단계(주문 생성 = `PENDING_PAYMENT`) 부터 판매자에게 "새로운 주문이 접수되었습니다" 알림이 발송. 결제 실패 / 환불 시에도 알림은 그대로 남아 노이즈.
+
+**원인**: `OrderService.create` 마지막에 무조건 `notificationService.createNotification(..., "새로운 주문이 접수되었습니다.")` 호출.
+
+**해결**:
+1. **주문 생성 시점 알림 제거** — 결제 완료 전엔 알림 X
+2. **결제 완료 시점 알림에 작품 제목 포함** — `PaymentService.completePayment` 에서 `workDAO.findById(workId)` 로 title fetch 후 `"'○○' 작품이 판매되었습니다."`
+3. 알림 type 도 `PAYMENT` → **`SALE`** 로 의미 명확화
+
+```java
+// PaymentService.completePayment 발췌
+String workTitle = workDAO.findById(order.getWorkId()).map(WorkDTO::getTitle).orElse(null);
+String message = workTitle != null && !workTitle.isBlank()
+        ? "'" + workTitle + "' 작품이 판매되었습니다."
+        : "내 작품 한 점이 판매되었습니다.";
+notificationService.createNotification(
+        order.getSellerId(), order.getBuyerId(), "SALE", "ORDER", order.getId(), message);
+```
+
+### 🔧 트러블슈팅 — 다크모드 미적용 (알림 페이지 + 드롭다운)
+
+**증상**: 다크모드 토글해도 알림 항목 배경이 거의 흰색 그대로. unread 항목이 특히 튐.
+
+**원인 1** (드롭다운, `shell.css`): unread 배경이 `color-mix(..., var(--bd-chat-accent) 6%, white)` — 다크에서도 흰색과 mix 라 거의 흰 배경.
+
+**원인 2** (알림 페이지, `notification.css`): 자체 `:root` 변수만 라이트로 정의 + hardcoded `#fff` `#1f2937` 곳곳. `data-theme="dark"` 처리 없음.
+
+**해결**: 두 CSS 파일 끝에 `:root[data-theme="dark"]` 오버라이드 추가.
+- 드롭다운: hover 를 흰색 6%, unread 를 `color-mix(... accent 18%, var(--bd-color-bg))` 로
+- 페이지: `--bg/--surface/--line/--text/--muted` 다크 매핑 + 직접 색 박힌 셀렉터 (back-button / radio-mark / switch 등) 개별 오버라이드
+
+---
+
+## 9. 공모전
+
+작가가 자기 작품으로 출품하는 콘테스트. 주최자가 마감 후 우승작 1개를 직접 선정하고, 그 다음날 자동 알림이 우승자에게 발송.
+
+### 라이프사이클 — `tbl_contest.status`
+
+```
+UPCOMING (예정) → OPEN (모집중) → CLOSED (마감) → RESULT (결과 발표)
+```
+
+주최자가 마감일 이후 출품작 중 1개를 "우승작 선정" 클릭 → `awardRank` 가 `"우승"` 으로 셋. 다음날 00:05 cron 이 `winnerNotifiedAt` NULL 인 우승작들 모아 알림 발송.
+
+### 상세 패널 (사이드 슬라이드)
+
+`/contest/list` 진입 → 카드 클릭 → 우측에 상세 패널이 슬라이드인. 페이지 이동 없이 카드 ↔ 상세 토글.
+
+패널 구성
+- 배너 / 제목 / 주최자 / 출품 수 / 조회 수 / 설명 / 상태 / 기간 / 상금 / 발표일 / 태그
+- **우승작 배너** (발표 후 모두에게 공개)
+- **출품작 그리드** (주최자에게만)
+- 액션 — 참가 신청 / 공유 / 신고
+
+### 주최자만 출품작 그리드 + 우승작 선정 버튼
+
+**프론트** (`contest-list.js`): `meta[name="bd-current-user-id"]` 와 `contest.memberId` 비교로 주최자 판단. 아니면 출품작 섹션 자체를 hidden, 우승작 배너만 별도 fetch.
+
+**백엔드** 도 같이 막음 — 직접 API 호출해도 비주최자에겐 우승작(`awardRank` 있음) 만 반환.
+
+```java
+// ContestController.apiEntries
+boolean isHost = userDetails != null && detail.getMemberId().equals(userDetails.getId());
+return isHost
+        ? ResponseEntity.ok(all)
+        : ResponseEntity.ok(all.stream().filter(e -> e.getAwardRank() != null).toList());
+```
+
+각 출품작 카드에 "우승작 선정" 버튼이 뜨는 조건 — 주최자 본인 ∧ 접수 마감 후 ∧ 미발표.
+
+### 우승작 선정 흐름
+
+```
+주최자가 카드의 "우승작 선정" 클릭
+   ↓
+POST /contest/api/{id}/winner  { entryId }
+   ↓
+ContestService.selectWinner
+  ├─ 권한 체크 (contest.memberId == memberId)
+  ├─ winnerNotifiedAt == null (이미 발표된 공모전 차단)
+  ├─ entryEnd 이후인지 확인
+  └─ updateContestWinner(contestId, entryId, "우승")
+   ↓
+화면: 패널 다시 로드 → 상단 우승작 배너 + 그리드 카드에 🏆 뱃지
+   ↓
+다음날 00:05 @Scheduled dispatchWinnerNotifications()
+   ↓
+우승자에게 "공모전 우승작으로 선정되었습니다." 알림
+   ↓
+markWinnerNotificationSent(contestId)  // winnerNotifiedAt 셋
+```
+
+### 🔧 트러블슈팅 — "참가 신청까진 되는데 그 뒤가 없음"
+
+**증상**: 출품 자체는 가능한데 출품작 보는 페이지, 우승작 선정 UI, 결과 발표 같은 게 모두 없어 보임.
+
+**원인**: 백엔드 서비스 메서드(`selectWinner`, `getContestEntryList`, `@Scheduled` 알림) 와 DB 컬럼(`winner_notified_at`, `award_rank`) 까지는 모두 만들어져 있었는데, **컨트롤러에 API 가 노출되지 않고 프론트 UI 도 비어있는 상태**였음. 백엔드만 만들고 표면이 빠진 케이스.
+
+**해결**:
+- 컨트롤러에 두 엔드포인트 추가 — `GET /contest/api/{id}/entries`, `POST /contest/api/{id}/winner`
+- 상세 패널 HTML 에 우승작 배너 + 출품작 그리드 마크업 추가
+- `contest-list.js` 에 `loadContestEntries(contest)` 추가 — entries fetch + 우승작 배너 + 카드 렌더 + 조건부 선정 버튼
+- 비주최자 노출 방지 — 프론트(섹션 hidden) + 백엔드(서비스 필터) 두 층
+
+---
+
+## 10. 찜
+
+작품과 공모전 모두를 찜할 수 있는 다형성(polymorphic) 북마크. `tbl_bookmark` 한 테이블에 `target_type` + `target_id` 로 어떤 타입이든 저장.
+
+### API
+
+| 메소드 | URL | 동작 |
+|---|---|---|
+| POST | `/api/bookmarks` | `{ targetType, targetId }` 토글 (있으면 삭제 / 없으면 추가) → `{ bookmarked: true/false }` 반환 |
+| GET | `/api/bookmarks/my` | 본인 찜 목록 (작품/공모전 혼합) |
+| GET | `/api/bookmarks/check?targetType=&targetId=` | 단일 대상 찜 여부 |
+
+### 토글 동작 패턴
+
+작품 상세 / 공모전 상세 페이지의 찜 버튼이 같은 API 를 호출. UI 가 알아서 active 클래스 토글:
+
+```javascript
+// 공모전 상세 패널 — 찜 버튼
+bookmarkBtn.onclick = function () {
+    fetch("/api/bookmarks", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetType: "CONTEST", targetId: data.id })
+    })
+    .then(r => r.json())
+    .then(result => {
+        data.isBookmarked = result.bookmarked;
+        updateBookmarkBtn(bookmarkBtn, result.bookmarked);
+    });
+};
+```
+
+같은 API 가 `targetType: "WORK"` 으로도 호출되어 작품 상세 페이지에서 재사용. 즉 새 타입(예: 갤러리)을 추가하더라도 API 시그니처는 그대로.
+
+### 내 찜 페이지 (`/wish`)
+
+본인 찜 목록을 작품·공모전 통합해서 그리드로. 사이드바 "보관함 → 찜한 작품" 에서 진입.
+
+### 정합성 — 알림 모듈과 연계
+
+찜 자체는 알림을 만들지 않지만, **찜한 작품이 등록자에 의해 판매되거나 경매 마감될 때** 찜한 사용자에게 푸시할 여지가 있음(현재 미구현). 이건 향후 마일스톤.
 
 ---
 

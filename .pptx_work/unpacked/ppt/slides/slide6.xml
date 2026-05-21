@@ -1,0 +1,1849 @@
+<?xml version="1.0" encoding="utf-8"?>
+<p:sld xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:dgm="http://schemas.openxmlformats.org/drawingml/2006/diagram" xmlns:dsp="http://schemas.microsoft.com/office/drawing/2008/diagram" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
+  <p:cSld>
+    <p:bg>
+      <p:bgPr shadeToTitle="0">
+        <a:solidFill>
+          <a:srgbClr val="0a0e1a"/>
+        </a:solidFill>
+      </p:bgPr>
+    </p:bg>
+    <p:spTree>
+      <p:nvGrpSpPr>
+        <p:cNvPr id="1" name=""/>
+        <p:cNvGrpSpPr/>
+        <p:nvPr/>
+      </p:nvGrpSpPr>
+      <p:grpSpPr>
+        <a:xfrm>
+          <a:off x="0" y="0"/>
+          <a:ext cx="0" cy="0"/>
+          <a:chOff x="0" y="0"/>
+          <a:chExt cx="0" cy="0"/>
+        </a:xfrm>
+      </p:grpSpPr>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="2" name="Page Num"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="20800000" y="1280160"/>
+            <a:ext cx="2400000" cy="400000"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln>
+            <a:solidFill/>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" anchor="t" lIns="0" rIns="0" tIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="r"/>
+            <a:r>
+              <a:rPr sz="2200" b="1" spc="300">
+                <a:solidFill>
+                  <a:srgbClr val="94A3B8"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>07 / 07</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="3" name="Accent Line"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1371600" y="1371600"/>
+            <a:ext cx="91440" cy="365760"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="8B7CFF"/>
+          </a:solidFill>
+          <a:ln>
+            <a:solidFill/>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p/>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="4" name="Section Label"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1645920" y="1371600"/>
+            <a:ext cx="6000000" cy="400000"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln>
+            <a:solidFill/>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" anchor="t" lIns="0" rIns="0" tIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l"/>
+            <a:r>
+              <a:rPr sz="2800" b="1" spc="300">
+                <a:solidFill>
+                  <a:srgbClr val="8B7CFF"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>CREATOR ECONOMY</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="5" name="Title"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1371600" y="2100000"/>
+            <a:ext cx="21000000" cy="2000000"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln>
+            <a:solidFill/>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" anchor="t" lIns="0" rIns="0" tIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l"/>
+            <a:r>
+              <a:rPr sz="3400" b="1" spc="-50">
+                <a:solidFill>
+                  <a:srgbClr val="FFFFFF"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t xml:space="preserve">창작자에게는 </a:t>
+            </a:r>
+            <a:r>
+              <a:rPr sz="3400" b="1" spc="-50">
+                <a:solidFill>
+                  <a:srgbClr val="8B7CFF"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>새로운 수익 모델</a:t>
+            </a:r>
+            <a:r>
+              <a:rPr sz="3400" b="1" spc="-50">
+                <a:solidFill>
+                  <a:srgbClr val="FFFFFF"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>이 필요합니다</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="10" name="Stat1 BG"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="960120" y="3411158"/>
+            <a:ext cx="6909816" cy="3000000"/>
+          </a:xfrm>
+          <a:prstGeom prst="roundRect">
+            <a:avLst>
+              <a:gd name="adj" fmla="val 5000"/>
+            </a:avLst>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="141c2b"/>
+          </a:solidFill>
+          <a:ln w="12700">
+            <a:solidFill>
+              <a:srgbClr val="1f2937"/>
+            </a:solidFill>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0">
+              <a:defRPr/>
+            </a:pPr>
+            <a:endParaRPr lang="ko-KR" altLang="en-US"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="11" name="Stat1 Tag"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1417320" y="3711158"/>
+            <a:ext cx="6000000" cy="357875"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="t">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2400" b="1" spc="300">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>TOP 10%</a:t>
+            </a:r>
+            <a:endParaRPr sz="2400" b="1" spc="300">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="12" name="Stat1 Num"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1417320" y="4311159"/>
+            <a:ext cx="6000000" cy="605600"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="t">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>50.3</a:t>
+            </a:r>
+            <a:r>
+              <a:rPr sz="4000" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:effectLst>
+                  <a:glow rad="127000">
+                    <a:srgbClr val="ffffff">
+                      <a:alpha val="40000"/>
+                    </a:srgbClr>
+                  </a:glow>
+                </a:effectLst>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>%</a:t>
+            </a:r>
+            <a:endParaRPr sz="4000" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="13" name="Stat1 Caption"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1417320" y="5711159"/>
+            <a:ext cx="6000000" cy="396225"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>상위 10%가 차지하는 전체 수입 비중</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="0">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="20" name="Stat2 BG"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="8327136" y="3411158"/>
+            <a:ext cx="6909816" cy="3000000"/>
+          </a:xfrm>
+          <a:prstGeom prst="roundRect">
+            <a:avLst>
+              <a:gd name="adj" fmla="val 5000"/>
+            </a:avLst>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="141c2b"/>
+          </a:solidFill>
+          <a:ln w="12700">
+            <a:solidFill>
+              <a:srgbClr val="1f2937"/>
+            </a:solidFill>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0">
+              <a:defRPr/>
+            </a:pPr>
+            <a:endParaRPr lang="ko-KR" altLang="en-US"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="21" name="Stat2 Tag"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="8784336" y="3711158"/>
+            <a:ext cx="6000000" cy="357875"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="t">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2400" b="1" spc="300">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>TOP 1%</a:t>
+            </a:r>
+            <a:endParaRPr sz="2400" b="1" spc="300">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="22" name="Stat2 Num"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="8784336" y="4311159"/>
+            <a:ext cx="6000000" cy="605600"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="t">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>13.25</a:t>
+            </a:r>
+            <a:r>
+              <a:rPr sz="4000" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:effectLst>
+                  <a:glow rad="127000">
+                    <a:srgbClr val="ffffff">
+                      <a:alpha val="40000"/>
+                    </a:srgbClr>
+                  </a:glow>
+                </a:effectLst>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>억</a:t>
+            </a:r>
+            <a:endParaRPr sz="4000" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="23" name="Stat2 Caption"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="8784336" y="5711159"/>
+            <a:ext cx="6000000" cy="396225"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>상위 1% 창작자 연평균 수입</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="0">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="30" name="Stat3 BG"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="15694152" y="3411158"/>
+            <a:ext cx="6909816" cy="3000000"/>
+          </a:xfrm>
+          <a:prstGeom prst="roundRect">
+            <a:avLst>
+              <a:gd name="adj" fmla="val 5000"/>
+            </a:avLst>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="141c2b"/>
+          </a:solidFill>
+          <a:ln w="12700">
+            <a:solidFill>
+              <a:srgbClr val="1f2937"/>
+            </a:solidFill>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0">
+              <a:defRPr/>
+            </a:pPr>
+            <a:endParaRPr lang="ko-KR" altLang="en-US"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="31" name="Stat3 Tag"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="16151352" y="3711158"/>
+            <a:ext cx="6000000" cy="357875"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="t">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2400" b="1" spc="300">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>BOTTOM 50%</a:t>
+            </a:r>
+            <a:endParaRPr sz="2400" b="1" spc="300">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="32" name="Stat3 Num"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="16151352" y="4311159"/>
+            <a:ext cx="6000000" cy="605600"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="t">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>1,800</a:t>
+            </a:r>
+            <a:r>
+              <a:rPr sz="4000" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:effectLst>
+                  <a:glow rad="127000">
+                    <a:srgbClr val="ffffff">
+                      <a:alpha val="40000"/>
+                    </a:srgbClr>
+                  </a:glow>
+                </a:effectLst>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>만</a:t>
+            </a:r>
+            <a:endParaRPr sz="4000" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="33" name="Stat3 Caption"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="16151352" y="5711159"/>
+            <a:ext cx="6000000" cy="396225"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>하위 50% 창작자 연평균 수입</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="0">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="40" name="Chart Card"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1371600" y="7113171"/>
+            <a:ext cx="21643848" cy="5986829"/>
+          </a:xfrm>
+          <a:prstGeom prst="roundRect">
+            <a:avLst>
+              <a:gd name="adj" fmla="val 3500"/>
+            </a:avLst>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="141c2b"/>
+          </a:solidFill>
+          <a:ln w="12700">
+            <a:solidFill>
+              <a:srgbClr val="1f2937"/>
+            </a:solidFill>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0">
+              <a:defRPr/>
+            </a:pPr>
+            <a:endParaRPr lang="ko-KR" altLang="en-US"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="50" name="Bottom Note"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1371600" y="13150000"/>
+            <a:ext cx="21643848" cy="400000"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln>
+            <a:solidFill/>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" rIns="0" tIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="ctr"/>
+            <a:r>
+              <a:rPr sz="2400" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="8B7CFF"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>BIDEO는 직접 거래로 이 수익 격차를 좁힙니다</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="51" name="TextBox 50"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1645920" y="7463437"/>
+            <a:ext cx="8141970" cy="745208"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="4300" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="f1f1f1"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>창작자 수익 격차와 BIDEO의 해법</a:t>
+            </a:r>
+            <a:endParaRPr sz="4300" b="1">
+              <a:solidFill>
+                <a:srgbClr val="f1f1f1"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="52" name="TextBox 51"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1737360" y="9380982"/>
+            <a:ext cx="1226820" cy="437388"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="r">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2300">
+                <a:solidFill>
+                  <a:srgbClr val="f1f1f1"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>상위 1%</a:t>
+            </a:r>
+            <a:endParaRPr sz="2300">
+              <a:solidFill>
+                <a:srgbClr val="f1f1f1"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="53" name="Rectangle 52"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="3063239" y="9372600"/>
+            <a:ext cx="10972800" cy="548640"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="1A1A2A"/>
+          </a:solidFill>
+          <a:ln>
+            <a:noFill/>
+          </a:ln>
+        </p:spPr>
+        <p:style>
+          <a:lnRef idx="1">
+            <a:schemeClr val="accent1"/>
+          </a:lnRef>
+          <a:fillRef idx="3">
+            <a:schemeClr val="accent1"/>
+          </a:fillRef>
+          <a:effectRef idx="2">
+            <a:schemeClr val="accent1"/>
+          </a:effectRef>
+          <a:fontRef idx="minor">
+            <a:schemeClr val="lt1"/>
+          </a:fontRef>
+        </p:style>
+        <p:txBody>
+          <a:bodyPr rtlCol="0" anchor="ctr"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="ctr"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="54" name="Rectangle 53"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="3063239" y="9372600"/>
+            <a:ext cx="10972800" cy="548640"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="6800ea"/>
+          </a:solidFill>
+          <a:ln>
+            <a:noFill/>
+          </a:ln>
+        </p:spPr>
+        <p:style>
+          <a:lnRef idx="1">
+            <a:schemeClr val="accent1"/>
+          </a:lnRef>
+          <a:fillRef idx="3">
+            <a:schemeClr val="accent1"/>
+          </a:fillRef>
+          <a:effectRef idx="2">
+            <a:schemeClr val="accent1"/>
+          </a:effectRef>
+          <a:fontRef idx="minor">
+            <a:schemeClr val="lt1"/>
+          </a:fontRef>
+        </p:style>
+        <p:txBody>
+          <a:bodyPr anchor="ctr"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="ctr">
+              <a:defRPr/>
+            </a:pPr>
+            <a:endParaRPr lang="ko-KR" altLang="en-US" sz="2400"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="55" name="TextBox 54"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="13110400" y="8380094"/>
+            <a:ext cx="2297240" cy="666751"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3800" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="a89bff"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>13.25억원</a:t>
+            </a:r>
+            <a:endParaRPr sz="3800" b="1">
+              <a:solidFill>
+                <a:srgbClr val="a89bff"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="56" name="TextBox 55"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1813560" y="10332719"/>
+            <a:ext cx="1112520" cy="438150"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="r">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="1600" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="f1f1f1"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>상위 </a:t>
+            </a:r>
+            <a:r>
+              <a:rPr sz="2300" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="f1f1f1"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>10</a:t>
+            </a:r>
+            <a:r>
+              <a:rPr sz="1600" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="f1f1f1"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>%</a:t>
+            </a:r>
+            <a:endParaRPr sz="1600" b="0">
+              <a:solidFill>
+                <a:srgbClr val="f1f1f1"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="57" name="Rectangle 56"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="3063239" y="10305288"/>
+            <a:ext cx="10972800" cy="548640"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="1A1A2A"/>
+          </a:solidFill>
+          <a:ln>
+            <a:noFill/>
+          </a:ln>
+        </p:spPr>
+        <p:style>
+          <a:lnRef idx="1">
+            <a:schemeClr val="accent1"/>
+          </a:lnRef>
+          <a:fillRef idx="3">
+            <a:schemeClr val="accent1"/>
+          </a:fillRef>
+          <a:effectRef idx="2">
+            <a:schemeClr val="accent1"/>
+          </a:effectRef>
+          <a:fontRef idx="minor">
+            <a:schemeClr val="lt1"/>
+          </a:fontRef>
+        </p:style>
+        <p:txBody>
+          <a:bodyPr rtlCol="0" anchor="ctr"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="ctr"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="58" name="Rectangle 57"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="3063239" y="10305288"/>
+            <a:ext cx="2153153" cy="548640"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="8B7CFF"/>
+          </a:solidFill>
+          <a:ln>
+            <a:noFill/>
+          </a:ln>
+        </p:spPr>
+        <p:style>
+          <a:lnRef idx="1">
+            <a:schemeClr val="accent1"/>
+          </a:lnRef>
+          <a:fillRef idx="3">
+            <a:schemeClr val="accent1"/>
+          </a:fillRef>
+          <a:effectRef idx="2">
+            <a:schemeClr val="accent1"/>
+          </a:effectRef>
+          <a:fontRef idx="minor">
+            <a:schemeClr val="lt1"/>
+          </a:fontRef>
+        </p:style>
+        <p:txBody>
+          <a:bodyPr rtlCol="0" anchor="ctr"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="ctr"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="59" name="TextBox 58"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="5380985" y="10323576"/>
+            <a:ext cx="1425580" cy="523494"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2900" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="a89bff"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>2.6억원</a:t>
+            </a:r>
+            <a:endParaRPr sz="2900" b="0">
+              <a:solidFill>
+                <a:srgbClr val="a89bff"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="60" name="TextBox 59"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1899285" y="11265407"/>
+            <a:ext cx="1026795" cy="334138"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="r">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="1600" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="f1f1f1"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>중위 40%</a:t>
+            </a:r>
+            <a:endParaRPr sz="1600" b="0">
+              <a:solidFill>
+                <a:srgbClr val="f1f1f1"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="61" name="Rectangle 60"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="3063239" y="11237976"/>
+            <a:ext cx="10972800" cy="548640"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="1A1A2A"/>
+          </a:solidFill>
+          <a:ln>
+            <a:noFill/>
+          </a:ln>
+        </p:spPr>
+        <p:style>
+          <a:lnRef idx="1">
+            <a:schemeClr val="accent1"/>
+          </a:lnRef>
+          <a:fillRef idx="3">
+            <a:schemeClr val="accent1"/>
+          </a:fillRef>
+          <a:effectRef idx="2">
+            <a:schemeClr val="accent1"/>
+          </a:effectRef>
+          <a:fontRef idx="minor">
+            <a:schemeClr val="lt1"/>
+          </a:fontRef>
+        </p:style>
+        <p:txBody>
+          <a:bodyPr rtlCol="0" anchor="ctr"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="ctr"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="62" name="Rectangle 61"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="3063239" y="11237976"/>
+            <a:ext cx="414067" cy="548640"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="3A2A6A"/>
+          </a:solidFill>
+          <a:ln>
+            <a:noFill/>
+          </a:ln>
+        </p:spPr>
+        <p:style>
+          <a:lnRef idx="1">
+            <a:schemeClr val="accent1"/>
+          </a:lnRef>
+          <a:fillRef idx="3">
+            <a:schemeClr val="accent1"/>
+          </a:fillRef>
+          <a:effectRef idx="2">
+            <a:schemeClr val="accent1"/>
+          </a:effectRef>
+          <a:fontRef idx="minor">
+            <a:schemeClr val="lt1"/>
+          </a:fontRef>
+        </p:style>
+        <p:txBody>
+          <a:bodyPr rtlCol="0" anchor="ctr"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="ctr"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="63" name="TextBox 62"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="3670474" y="11288267"/>
+            <a:ext cx="1202516" cy="448057"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2400" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="a89bff"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>0.5억원</a:t>
+            </a:r>
+            <a:endParaRPr sz="2400" b="0">
+              <a:solidFill>
+                <a:srgbClr val="a89bff"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="64" name="TextBox 63"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1899285" y="12198096"/>
+            <a:ext cx="1026795" cy="334899"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="r">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="1600" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="f1f1f1"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>하위 50%</a:t>
+            </a:r>
+            <a:endParaRPr sz="1600" b="0">
+              <a:solidFill>
+                <a:srgbClr val="f1f1f1"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="65" name="Rectangle 64"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="3063239" y="12170664"/>
+            <a:ext cx="10972800" cy="548640"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="1A1A2A"/>
+          </a:solidFill>
+          <a:ln>
+            <a:noFill/>
+          </a:ln>
+        </p:spPr>
+        <p:style>
+          <a:lnRef idx="1">
+            <a:schemeClr val="accent1"/>
+          </a:lnRef>
+          <a:fillRef idx="3">
+            <a:schemeClr val="accent1"/>
+          </a:fillRef>
+          <a:effectRef idx="2">
+            <a:schemeClr val="accent1"/>
+          </a:effectRef>
+          <a:fontRef idx="minor">
+            <a:schemeClr val="lt1"/>
+          </a:fontRef>
+        </p:style>
+        <p:txBody>
+          <a:bodyPr rtlCol="0" anchor="ctr"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="ctr"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="66" name="Rectangle 65"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="3063239" y="12170664"/>
+            <a:ext cx="228600" cy="548640"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="2A2A4A"/>
+          </a:solidFill>
+          <a:ln>
+            <a:noFill/>
+          </a:ln>
+        </p:spPr>
+        <p:style>
+          <a:lnRef idx="1">
+            <a:schemeClr val="accent1"/>
+          </a:lnRef>
+          <a:fillRef idx="3">
+            <a:schemeClr val="accent1"/>
+          </a:fillRef>
+          <a:effectRef idx="2">
+            <a:schemeClr val="accent1"/>
+          </a:effectRef>
+          <a:fontRef idx="minor">
+            <a:schemeClr val="lt1"/>
+          </a:fontRef>
+        </p:style>
+        <p:txBody>
+          <a:bodyPr rtlCol="0" anchor="ctr"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="ctr"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="67" name="TextBox 66"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="3431536" y="12211050"/>
+            <a:ext cx="1416558" cy="467868"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2500" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="a89bff"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>0.18억원</a:t>
+            </a:r>
+            <a:endParaRPr sz="2500" b="0">
+              <a:solidFill>
+                <a:srgbClr val="a89bff"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="68" name="TextBox 67"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="14132052" y="9099804"/>
+            <a:ext cx="1637538" cy="413765"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2100" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="a89bff"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>▲ 73배 격차</a:t>
+            </a:r>
+            <a:endParaRPr sz="2100" b="1">
+              <a:solidFill>
+                <a:srgbClr val="a89bff"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="70" name="Rectangle 69"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="16154400" y="7463437"/>
+            <a:ext cx="6172200" cy="5340096"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="1a0a3a"/>
+          </a:solidFill>
+          <a:ln w="19050">
+            <a:solidFill>
+              <a:srgbClr val="8b7cff"/>
+            </a:solidFill>
+          </a:ln>
+        </p:spPr>
+        <p:style>
+          <a:lnRef idx="1">
+            <a:schemeClr val="accent1"/>
+          </a:lnRef>
+          <a:fillRef idx="3">
+            <a:schemeClr val="accent1"/>
+          </a:fillRef>
+          <a:effectRef idx="2">
+            <a:schemeClr val="accent1"/>
+          </a:effectRef>
+          <a:fontRef idx="minor">
+            <a:schemeClr val="lt1"/>
+          </a:fontRef>
+        </p:style>
+        <p:txBody>
+          <a:bodyPr anchor="ctr"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="ctr">
+              <a:defRPr/>
+            </a:pPr>
+            <a:endParaRPr lang="ko-KR" altLang="en-US"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="71" name="TextBox 70"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="18701384" y="7888605"/>
+            <a:ext cx="1078230" cy="491490"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="ctr">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="f1f1f1"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>BIDEO</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="f1f1f1"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="72" name="TextBox 71"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="18325148" y="8968930"/>
+            <a:ext cx="1830704" cy="545592"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="ctr">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3000" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="f1f1f1"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>직접 거래</a:t>
+            </a:r>
+            <a:endParaRPr lang="ko-KR" altLang="en-US" sz="3000" b="1">
+              <a:solidFill>
+                <a:srgbClr val="f1f1f1"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="73" name="TextBox 72"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="18225136" y="9833600"/>
+            <a:ext cx="2106930" cy="546745"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="ctr">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3000" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="717171"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>수수료 10%</a:t>
+            </a:r>
+            <a:endParaRPr sz="3000" b="0">
+              <a:solidFill>
+                <a:srgbClr val="717171"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="74" name="TextBox 73"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="17712922" y="10566082"/>
+            <a:ext cx="3145154" cy="576263"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="ctr">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3200" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="a89bff"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>창작자 90% 정산</a:t>
+            </a:r>
+            <a:endParaRPr sz="3200" b="1">
+              <a:solidFill>
+                <a:srgbClr val="a89bff"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="75" name="TextBox 74"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="17712922" y="11404092"/>
+            <a:ext cx="3249930" cy="576836"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="none">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr lvl="0" algn="ctr">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3200" b="0">
+                <a:solidFill>
+                  <a:srgbClr val="717171"/>
+                </a:solidFill>
+              </a:rPr>
+              <a:t>낙찰가 직접 수령</a:t>
+            </a:r>
+            <a:endParaRPr lang="ko-KR" altLang="en-US" sz="3200" b="0">
+              <a:solidFill>
+                <a:srgbClr val="717171"/>
+              </a:solidFill>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+    </p:spTree>
+  </p:cSld>
+  <p:clrMapOvr>
+    <a:masterClrMapping/>
+  </p:clrMapOvr>
+  <mc:AlternateContent xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    <mc:Choice xmlns:p14="http://schemas.microsoft.com/office/powerpoint/2010/main" Requires="p14">
+      <p:transition xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p14="http://schemas.microsoft.com/office/powerpoint/2010/main" mc:Ignorable="p14" p14:dur="500"/>
+    </mc:Choice>
+    <mc:Fallback>
+      <p:transition/>
+    </mc:Fallback>
+  </mc:AlternateContent>
+</p:sld>

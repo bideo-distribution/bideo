@@ -22,6 +22,10 @@ public interface OrderMapper {
                                               @Param("workId") Long workId,
                                               @Param("orderType") String orderType);
 
+    /** 다운로드 권한 체크 — buyer 가 해당 work 를 결제 완료(PAID/COMPLETED) 한 적이 있는지. */
+    boolean existsPaidByBuyerAndWork(@Param("buyerId") Long buyerId,
+                                     @Param("workId") Long workId);
+
     List<OrderListResponseDTO> selectByBuyerId(@Param("buyerId") Long buyerId,
                                                 @Param("offset") int offset,
                                                 @Param("limit") int limit);
