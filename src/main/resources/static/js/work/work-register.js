@@ -1650,10 +1650,12 @@ function initializeWorkRegister() {
     if (auctionDeadlineButtons.length && auctionDeadlineSelected && auctionDeadlineHoursInput) {
         auctionDeadlineButtons.forEach(function (button) {
             button.addEventListener("click", function () {
-                let minutes = Number(button.getAttribute("data-hours") || "0");
+                let displayMinutes = Number(button.getAttribute("data-hours") || "0");
+                // 시연용 — 30분 라벨은 사용자에겐 "30분" 으로 보이지만 실제 마감은 5분으로 단축.
+                let actualMinutes = displayMinutes === 30 ? 5 : displayMinutes;
 
-                auctionDeadlineSelected.textContent = formatAuctionDeadline(minutes);
-                auctionDeadlineHoursInput.value = String(minutes);
+                auctionDeadlineSelected.textContent = formatAuctionDeadline(displayMinutes);
+                auctionDeadlineHoursInput.value = String(actualMinutes);
 
                 auctionDeadlineButtons.forEach(function (item) {
                     item.classList.remove("work-auction-config__deadline-btn--active");
