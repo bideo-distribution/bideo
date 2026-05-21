@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="utf-8"?>
+<p:sld xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:dgm="http://schemas.openxmlformats.org/drawingml/2006/diagram" xmlns:dsp="http://schemas.microsoft.com/office/drawing/2008/diagram" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
+  <p:cSld>
+    <p:bg>
+      <p:bgPr shadeToTitle="0">
+        <a:solidFill>
+          <a:srgbClr val="0a0e1a"/>
+        </a:solidFill>
+      </p:bgPr>
+    </p:bg>
+    <p:spTree>
+      <p:nvGrpSpPr>
+        <p:cNvPr id="1" name=""/>
+        <p:cNvGrpSpPr/>
+        <p:nvPr/>
+      </p:nvGrpSpPr>
+      <p:grpSpPr>
+        <a:xfrm>
+          <a:off x="0" y="0"/>
+          <a:ext cx="0" cy="0"/>
+          <a:chOff x="0" y="0"/>
+          <a:chExt cx="0" cy="0"/>
+        </a:xfrm>
+      </p:grpSpPr>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="2" name="Page Num"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="20800000" y="1280160"/>
+            <a:ext cx="2400000" cy="400000"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln>
+            <a:solidFill/>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" anchor="t" lIns="0" rIns="0" tIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="r"/>
+            <a:r>
+              <a:rPr sz="2200" b="1" spc="300">
+                <a:solidFill>
+                  <a:srgbClr val="94A3B8"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>05 / 07</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="3" name="Accent Line"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1371600" y="1371600"/>
+            <a:ext cx="91440" cy="365760"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="8B7CFF"/>
+          </a:solidFill>
+          <a:ln>
+            <a:solidFill/>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p/>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="4" name="Section Label"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1645920" y="1371600"/>
+            <a:ext cx="8000000" cy="400000"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln>
+            <a:solidFill/>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" anchor="t" lIns="0" rIns="0" tIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l"/>
+            <a:r>
+              <a:rPr sz="2800" b="1" spc="300">
+                <a:solidFill>
+                  <a:srgbClr val="8B7CFF"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>USAGE &amp; REVENUE MODEL</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="5" name="Title"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1371600" y="2100000"/>
+            <a:ext cx="21000000" cy="2000000"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln>
+            <a:solidFill/>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" anchor="t" lIns="0" rIns="0" tIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l"/>
+            <a:r>
+              <a:rPr sz="3400" b="1" spc="-50">
+                <a:solidFill>
+                  <a:srgbClr val="FFFFFF"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t xml:space="preserve">익숙해진 유료 영상 결제, </a:t>
+            </a:r>
+            <a:r>
+              <a:rPr sz="3400" b="1" spc="-50">
+                <a:solidFill>
+                  <a:srgbClr val="8B7CFF"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>이제 경매로 한 걸음 더</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="20" name="Col2 BG"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="13746624" y="5349213"/>
+            <a:ext cx="4900000" cy="7800000"/>
+          </a:xfrm>
+          <a:prstGeom prst="roundRect">
+            <a:avLst>
+              <a:gd name="adj" fmla="val 4000"/>
+            </a:avLst>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="141c2b"/>
+          </a:solidFill>
+          <a:ln w="12700">
+            <a:solidFill>
+              <a:srgbClr val="1f2937"/>
+            </a:solidFill>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr>
+              <a:defRPr/>
+            </a:pPr>
+            <a:endParaRPr lang="ko-KR" altLang="en-US"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="21" name="Col2 Label"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="14023841" y="5699212"/>
+            <a:ext cx="4200000" cy="393600"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="t">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1" spc="300">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>REVENUE STREAMS</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1" spc="300">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="22" name="Col2 Title"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="14023841" y="6299212"/>
+            <a:ext cx="4200000" cy="1117575"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="t">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3700" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>BIDEO의</a:t>
+            </a:r>
+            <a:endParaRPr sz="3700" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3700" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>거래 구조</a:t>
+            </a:r>
+            <a:endParaRPr sz="3700" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="23" name="Col2 Body"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="14023841" y="8349212"/>
+            <a:ext cx="4200000" cy="2677550"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>01</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:spcBef>
+                <a:spcPts val="200"/>
+              </a:spcBef>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>낙찰가로 거래되는 영상</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:spcBef>
+                <a:spcPts val="900"/>
+              </a:spcBef>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>02</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:spcBef>
+                <a:spcPts val="200"/>
+              </a:spcBef>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>거래액의 10% 수수료</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:spcBef>
+                <a:spcPts val="900"/>
+              </a:spcBef>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>03</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:spcBef>
+                <a:spcPts val="200"/>
+              </a:spcBef>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>창작자 직접 수익</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="30" name="Col3 BG"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="19069148" y="5349213"/>
+            <a:ext cx="4900000" cy="7800000"/>
+          </a:xfrm>
+          <a:prstGeom prst="roundRect">
+            <a:avLst>
+              <a:gd name="adj" fmla="val 4000"/>
+            </a:avLst>
+          </a:prstGeom>
+          <a:solidFill>
+            <a:srgbClr val="141c2b"/>
+          </a:solidFill>
+          <a:ln w="12700">
+            <a:solidFill>
+              <a:srgbClr val="1f2937"/>
+            </a:solidFill>
+          </a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr>
+              <a:defRPr/>
+            </a:pPr>
+            <a:endParaRPr lang="ko-KR" altLang="en-US"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="31" name="Col3 Label"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="19346364" y="5699212"/>
+            <a:ext cx="4200000" cy="393600"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="t">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1" spc="300">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>AI FEATURES</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1" spc="300">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="32" name="Col3 Title"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="19346364" y="6299212"/>
+            <a:ext cx="4200000" cy="1117575"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="t">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3700" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>데이터로</a:t>
+            </a:r>
+            <a:endParaRPr sz="3700" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="3700" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>키워가는 성장</a:t>
+            </a:r>
+            <a:endParaRPr sz="3700" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="33" name="Col3 Body"/>
+          <p:cNvSpPr txBox="1"/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="19346364" y="8349212"/>
+            <a:ext cx="4200000" cy="2677550"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+          <a:noFill/>
+          <a:ln/>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0">
+            <a:spAutoFit/>
+          </a:bodyPr>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr algn="l">
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>01</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:spcBef>
+                <a:spcPts val="200"/>
+              </a:spcBef>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>AI 조회수 예측</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:spcBef>
+                <a:spcPts val="900"/>
+              </a:spcBef>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>02</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:spcBef>
+                <a:spcPts val="200"/>
+              </a:spcBef>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>AI 이미지 자동 생성</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:spcBef>
+                <a:spcPts val="900"/>
+              </a:spcBef>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="8b7cff"/>
+                </a:solidFill>
+                <a:latin typeface="Rajdhani"/>
+              </a:rPr>
+              <a:t>03</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="8b7cff"/>
+              </a:solidFill>
+              <a:latin typeface="Rajdhani"/>
+            </a:endParaRPr>
+          </a:p>
+          <a:p>
+            <a:pPr algn="l">
+              <a:spcBef>
+                <a:spcPts val="200"/>
+              </a:spcBef>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr sz="2600" b="1">
+                <a:solidFill>
+                  <a:srgbClr val="ffffff"/>
+                </a:solidFill>
+                <a:latin typeface="Noto Sans KR"/>
+              </a:rPr>
+              <a:t>RAG 경매 분석</a:t>
+            </a:r>
+            <a:endParaRPr sz="2600" b="1">
+              <a:solidFill>
+                <a:srgbClr val="ffffff"/>
+              </a:solidFill>
+              <a:latin typeface="Noto Sans KR"/>
+            </a:endParaRPr>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:pic>
+        <p:nvPicPr>
+          <p:cNvPr id="35" name=""/>
+          <p:cNvPicPr>
+            <a:picLocks noChangeAspect="1"/>
+          </p:cNvPicPr>
+          <p:nvPr/>
+        </p:nvPicPr>
+        <p:blipFill rotWithShape="1">
+          <a:blip r:embed="rId2"/>
+          <a:stretch>
+            <a:fillRect/>
+          </a:stretch>
+        </p:blipFill>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="337446" y="5178995"/>
+            <a:ext cx="12808062" cy="7970217"/>
+          </a:xfrm>
+          <a:prstGeom prst="rect">
+            <a:avLst/>
+          </a:prstGeom>
+        </p:spPr>
+      </p:pic>
+    </p:spTree>
+  </p:cSld>
+  <p:clrMapOvr>
+    <a:masterClrMapping/>
+  </p:clrMapOvr>
+  <mc:AlternateContent xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    <mc:Choice xmlns:p14="http://schemas.microsoft.com/office/powerpoint/2010/main" Requires="p14">
+      <p:transition xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p14="http://schemas.microsoft.com/office/powerpoint/2010/main" mc:Ignorable="p14" p14:dur="500"/>
+    </mc:Choice>
+    <mc:Fallback>
+      <p:transition/>
+    </mc:Fallback>
+  </mc:AlternateContent>
+</p:sld>

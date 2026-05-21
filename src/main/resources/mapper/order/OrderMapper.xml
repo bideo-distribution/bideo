@@ -46,6 +46,15 @@
         LIMIT 1
     </select>
 
+    <select id="existsPaidByBuyerAndWork" resultType="boolean">
+        SELECT EXISTS (
+            SELECT 1 FROM tbl_order
+             WHERE buyer_id = #{buyerId}
+               AND work_id  = #{workId}
+               AND status IN ('PAID', 'COMPLETED')
+        )
+    </select>
+
     <select id="selectByBuyerId" resultType="OrderListResponseDTO">
         SELECT o.id, o.order_code, o.total_price, o.order_type, o.status, o.ordered_at,
                w.title AS work_title,
