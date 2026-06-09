@@ -45,6 +45,29 @@ public class NotificationService {
         notificationDAO.save(vo);
     }
 
+    /**
+     * 같은 (받는사람, 보낸사람, 타입) 의 기존 알림을 먼저 삭제하고 새로 생성.
+     * 팔로우/언팔로우 토글 처럼 반복되는 이벤트에서 알림이 누적되지 않게 한다.
+     */
+    public void replaceNotification(Long memberId, Long senderId, String notiType,
+                                    String targetType, Long targetId, String message) {
+        if (senderId != null && senderId.equals(memberId)) {
+            return;
+        }
+        if (!isNotificationEnabled(memberId, notiType)) {
+            return;
+        }
+        notificationDAO.deleteByMemberAndSenderAndType(memberId, senderId, notiType);
+        notificationDAO.save(NotificationVO.builder()
+                .memberId(memberId)
+                .senderId(senderId)
+                .notiType(notiType)
+                .targetType(targetType)
+                .targetId(targetId)
+                .message(message)
+                .build());
+    }
+
     @Transactional(readOnly = true)
     public List<NotificationResponseDTO> getNotifications(Long memberId, int page) {
         int offset = page * PAGE_SIZE;
