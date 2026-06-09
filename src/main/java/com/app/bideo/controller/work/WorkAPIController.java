@@ -9,10 +9,13 @@ import com.app.bideo.dto.work.WorkCreateResponseDTO;
 import com.app.bideo.dto.work.WorkDetailResponseDTO;
 import com.app.bideo.dto.work.WorkListResponseDTO;
 import com.app.bideo.dto.work.WorkSearchDTO;
+import com.app.bideo.dto.work.WorkShareRequestDTO;
 import com.app.bideo.dto.work.WorkUpdateRequestDTO;
+import com.app.bideo.dto.member.MemberListResponseDTO;
 import com.app.bideo.auth.member.CustomUserDetails;
 import com.app.bideo.service.work.WorkService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -118,6 +121,25 @@ public class WorkAPIController {
             @RequestParam(required = false) Long memberId
     ) {
         return workService.toggleLike(id, memberId);
+    }
+
+    // 작품 공유 대상 조회
+    @GetMapping("/{id}/share/receivers")
+    public ResponseEntity<List<MemberListResponseDTO>> searchShareReceivers(
+            @PathVariable Long id,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestParam(defaultValue = "") String keyword) {
+        return ResponseEntity.ok(workService.searchShareReceivers(userDetails.getId(), keyword));
+    }
+
+    // 작품 공유
+    @PostMapping("/{id}/share")
+    public ResponseEntity<Void> shareWork(
+            @PathVariable Long id,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody WorkShareRequestDTO requestDTO) {
+        workService.shareWork(userDetails.getId(), id, requestDTO);
+        return ResponseEntity.ok().build();
     }
 
     // 작품 삭제

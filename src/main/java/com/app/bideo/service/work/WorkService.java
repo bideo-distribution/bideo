@@ -9,6 +9,7 @@ import com.app.bideo.dto.common.LikeToggleResponseDTO;
 import com.app.bideo.dto.common.PageResponseDTO;
 import com.app.bideo.dto.common.TagResponseDTO;
 import com.app.bideo.dto.interaction.CommentResponseDTO;
+import com.app.bideo.dto.member.MemberListResponseDTO;
 import com.app.bideo.dto.work.WorkCreateRequestDTO;
 import com.app.bideo.dto.work.WorkCreateResponseDTO;
 import com.app.bideo.dto.work.WorkDTO;
@@ -16,11 +17,14 @@ import com.app.bideo.dto.work.WorkDetailResponseDTO;
 import com.app.bideo.dto.work.WorkFileRequestDTO;
 import com.app.bideo.dto.work.WorkListResponseDTO;
 import com.app.bideo.dto.work.WorkSearchDTO;
+import com.app.bideo.dto.work.WorkShareRequestDTO;
 import com.app.bideo.dto.work.WorkUpdateRequestDTO;
 import com.app.bideo.repository.auction.AuctionDAO;
 import com.app.bideo.repository.interaction.BookmarkDAO;
+import com.app.bideo.repository.member.MemberRepository;
 import com.app.bideo.service.interaction.CommentService;
 import com.app.bideo.service.common.S3FileService;
+import com.app.bideo.service.common.ShareService;
 import com.app.bideo.service.embedding.EmbeddingApiClient;
 import com.app.bideo.service.llm.LlmDescribeApiClient;
 import com.app.bideo.service.notification.NotificationService;
@@ -60,6 +64,8 @@ public class WorkService {
     private final CommentService commentService;
     private final NotificationService notificationService;
     private final S3FileService s3FileService;
+    private final MemberRepository memberRepository;
+    private final ShareService shareService;
     private final LlmDescribeApiClient llmDescribeApiClient;
     private final WatermarkApiClient watermarkApiClient;
     private final EmbeddingApiClient embeddingApiClient;
@@ -732,6 +738,43 @@ public class WorkService {
         if (comment.getReplies() != null) {
             comment.getReplies().forEach(reply -> applyCommentState(reply, memberId));
         }
+    }
+
+    // 작품 공유 대상(회원) 검색 — 프로필/공모전 공유와 동일하게 키워드로 회원을 찾는다.
+    @Transactional(readOnly = true)
+    public List<MemberListResponseDTO> searchShareReceivers(Long currentMemberId, String keyword) {
+        String safeKeyword = keyword == null ? "" : keyword.trim();
+        List<MemberListResponseDTO> receivers = memberRepository.searchByKeyword(safeKeyword, currentMemberId, 20);
+        receivers.forEach(receiver -> receiver.setProfileImage(
+                s3FileService.getPresignedUrl(receiver.getProfileImage())
+        ));
+        return receivers;
+    }
+
+    // 작품 공유 — 채팅 메시지에 "OOO 작품을 공유했습니다." 로 전송. (기존엔 프로필 공유 API 를 빌려써서 "프로필을 공유했습니다" 로 나갔다.)
+    public void shareWork(Long currentMemberId, Long workId, WorkShareRequestDTO requestDTO) {
+        if (workId == null) {
+            throw new IllegalArgumentException("작품 정보가 필요합니다.");
+        }
+        WorkDTO work = workDAO.findById(workId)
+                .orElseThrow(() -> new IllegalArgumentException("작품을 찾을 수 없습니다."));
+
+        List<Long> receiverIds = requestDTO == null || requestDTO.getReceiverIds() == null
+                ? List.of()
+                : requestDTO.getReceiverIds().stream().distinct().toList();
+
+        String extraMessage = requestDTO != null && requestDTO.getMessage() != null
+                ? requestDTO.getMessage().trim()
+                : "";
+
+        shareService.shareToMembers(
+                currentMemberId,
+                receiverIds,
+                work.getTitle() + " 작품을 공유했습니다.",
+                "/work/detail/" + workId,
+                requestDTO != null ? requestDTO.getShareUrl() : null,
+                extraMessage
+        );
     }
 
     /** workId 목록 → 작품 썸네일(presigned URL) 맵. AI 큐레이션처럼 작품 메타가 필요한 외부 모듈용. */
