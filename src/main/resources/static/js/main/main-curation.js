@@ -29,7 +29,8 @@
     let title    = escapeHtml(item.work_title || '제목 없음');
     let category = escapeHtml(item.work_category || '');
     let price    = formatPrice(item.starting_price);
-    let img      = 'https://picsum.photos/seed/bideo-w' + workId + '/480/300';
+    // 백엔드가 채워준 실제 작품 썸네일을 우선 사용. 없으면 더미로 폴백.
+    let img      = item.thumbnail_url || ('https://picsum.photos/seed/bideo-w' + workId + '/480/300');
 
     return (
       '<a class="ai-curation-card" href="/work/detail/' + workId + '">' +

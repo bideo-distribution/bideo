@@ -60,7 +60,10 @@
 .ai-curation__track {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(220px, 1fr);
+  /* 가로 캐러셀 — 카드 폭을 고정해야 항목 수가 적어도(예: Top 1) 카드가
+     트랙 전체 폭으로 늘어나지 않는다. 1fr 을 쓰면 1개일 때 거대해진다. */
+  grid-auto-columns: 240px;
+  justify-content: start;
   gap: 16px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -172,7 +175,8 @@
 .ai-curation__skeleton {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(220px, 1fr);
+  grid-auto-columns: 240px;
+  justify-content: start;
   gap: 16px;
 }
 

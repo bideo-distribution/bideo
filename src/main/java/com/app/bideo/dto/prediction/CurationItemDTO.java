@@ -27,4 +27,8 @@ public class CurationItemDTO {
 
     @JsonProperty("is_won_predicted")
     private Boolean isWonPredicted;
+
+    /** 실제 작품 썸네일(S3 presigned URL). FastAPI 응답에는 없고 백엔드가 workId 로 채운다. */
+    @JsonProperty("thumbnail_url")
+    private String thumbnailUrl;
 }
