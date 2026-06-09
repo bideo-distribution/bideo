@@ -39,9 +39,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -730,6 +732,19 @@ public class WorkService {
         if (comment.getReplies() != null) {
             comment.getReplies().forEach(reply -> applyCommentState(reply, memberId));
         }
+    }
+
+    /** workId 목록 → 작품 썸네일(presigned URL) 맵. AI 큐레이션처럼 작품 메타가 필요한 외부 모듈용. */
+    @Transactional(readOnly = true)
+    public Map<Long, String> getThumbnailUrls(List<Long> workIds) {
+        if (workIds == null || workIds.isEmpty()) {
+            return Collections.emptyMap();
+        }
+        List<WorkListResponseDTO> works = workDAO.findByIdsOrdered(workIds);
+        Map<Long, String> result = new HashMap<>();
+        works.forEach(work ->
+                result.put(work.getId(), s3FileService.getPresignedUrl(work.getThumbnailUrl())));
+        return result;
     }
 
     private void applyThumbnailUrls(List<WorkListResponseDTO> works) {
