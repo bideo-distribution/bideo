@@ -1761,14 +1761,14 @@ function bindPageInteractions(page, data) {
             return;
         }
 
-        const ownerNickname = workState.ownerNickname || data.ownerNickname || "";
-        if (!ownerNickname) {
+        const workId = workState.id || data.id;
+        if (!workId) {
             shareList.innerHTML = '<div class="followManageEmpty">공유 대상을 불러올 수 없습니다.</div>';
             return;
         }
 
         shareList.innerHTML = '<div class="followManageEmpty">공유 대상을 불러오는 중입니다.</div>';
-        const users = await apiRequest(`/api/profile/${encodeURIComponent(ownerNickname)}/share/receivers?keyword=${encodeURIComponent(keyword || "")}`);
+        const users = await apiRequest(`/api/works/${encodeURIComponent(workId)}/share/receivers?keyword=${encodeURIComponent(keyword || "")}`);
         const safeUsers = Array.isArray(users) ? users : [];
         shareState.receiverMap = new Map();
 
@@ -2058,8 +2058,8 @@ function bindPageInteractions(page, data) {
                 return;
             }
 
-            const ownerNickname = workState.ownerNickname || data.ownerNickname || "";
-            if (!ownerNickname) {
+            const workId = workState.id || data.id;
+            if (!workId) {
                 window.alert("공유 대상을 확인하지 못했습니다.");
                 return;
             }
@@ -2069,7 +2069,7 @@ function bindPageInteractions(page, data) {
                 .filter(Boolean);
 
             try {
-                await apiRequest(`/api/profile/${encodeURIComponent(ownerNickname)}/share`, {
+                await apiRequest(`/api/works/${encodeURIComponent(workId)}/share`, {
                     method: "POST",
                     body: JSON.stringify({
                         receiverIds,

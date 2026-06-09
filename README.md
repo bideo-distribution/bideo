@@ -4,6 +4,61 @@
 
 ---
 
+## 📌 서비스 소개
+
+**BIDEO 는 영상 크리에이터(판매자)와 컬렉터(구매자)가 영상 콘텐츠를 경매·거래·소장하는 프리미엄 영상 마켓플레이스다.**
+
+### 풀려는 문제
+
+- **크리에이터** — 기존 스톡 영상 플랫폼은 고정가·일방향이라 작품의 희소성과 실제 수요가 가격에 반영되지 않는다. 정당한 가치로 팔 통로가 마땅치 않다.
+- **컬렉터** — 독점적이고 희소한 영상을 발견하고, 명확한 라이선스로 안전하게 소유할 방법이 부족하다.
+
+→ 가격을 **시장이 발견하게 하는 경매**, 작품을 둘러싼 **커뮤니티**, 거래의 **신뢰(저작권·정산)** 를 한 곳에 묶는 것이 BIDEO 의 출발점.
+
+### 솔루션 — 4개 레이어
+
+| 레이어 | 역할 |
+|---|---|
+| **거래** | 실시간 입찰 경매로 가격 발견 + 즉시 구매 + 안전결제·정산 |
+| **소셜** | 크리에이터 팔로우 · 댓글/좋아요 · 갤러리(컬렉션) · 실시간 채팅 |
+| **신뢰** | 비가시성 워터마크(DWT-DCT) 저작권 보호 · 라이선스 유형 · 도메인 이벤트 알림 |
+| **AI** | 낙찰 확률 예측 · 메인 큐레이션 추천 · 작가 팔로워 성장 예측 (FastAPI 연동) |
+
+> 본 문서가 다루는 **Frontend · 인증 · 실시간** 영역은 위 레이어 전반의 사용자 접점과 인증·메시징 인프라를 담당한다.
+
+---
+
+## 🧰 기술 스택
+
+| 구분 | 기술 |
+|---|---|
+| **Language** | Java 17 |
+| **Backend** | Spring Boot 3.5 · Spring MVC · Spring Security · Spring WebFlux (reactor-netty) · Spring WebSocket · Spring AOP |
+| **View** | Thymeleaf + Layout Dialect |
+| **인증** | JWT (jjwt 0.11.5) · OAuth2 Client (카카오·네이버·구글) · Spring Session |
+| **데이터** | MyBatis 3.0.5 · PostgreSQL |
+| **캐시 / 세션** | Redis (Spring Data Redis · Spring Session) |
+| **메시징** | RabbitMQ (Spring AMQP) · STOMP over WebSocket |
+| **스토리지** | AWS S3 (AWS SDK v2) |
+| **알림** | Solapi SDK (SMS 본인인증) · Spring Mail |
+| **AI 연동** | FastAPI — 낙찰 예측 · 큐레이션 · 워터마크 · 임베딩 |
+| **API 문서** | springdoc-openapi (Swagger UI) |
+| **인프라** | AWS EC2 · Docker · nginx |
+| **테스트** | JUnit 5 · Spring Boot Test · Spring Security Test · MyBatis Test |
+| **도구** | Gradle · Lombok · DevTools |
+
+---
+
+## 🗂 ERD
+
+회원 · 작품 · 경매 · 메시지 · 알림 등 전체 도메인의 데이터 모델.
+
+<p align="center">
+  <img src="docs/images/bideo-ERD.png" alt="BIDEO ERD" width="100%">
+</p>
+
+---
+
 ## 🙋 담당 영역 한눈에
 
 | 영역 | 핵심 책임 |
@@ -16,8 +71,6 @@
 | [6. 실시간 채팅](#6-실시간-채팅) | WebSocket + STOMP + RabbitMQ + 무한 스크롤 |
 | [7. 워터마크 검증 페이지](#7-워터마크-검증-페이지) | 업로드 파일에서 작가 식별자 추출 → 작가 카드 노출 |
 | [8. 알림](#8-알림) | 헤더 종 드롭다운 + 알림 페이지, 도메인 이벤트 발생 시 자동 생성 |
-| [9. 공모전](#9-공모전) | 등록 / 출품 / 주최자 우승작 선정 / 자동 알림 |
-| [10. 찜](#10-찜) | 작품·공모전 다형성 북마크, 토글 + 내 찜 목록 |
 
 ---
 
@@ -188,11 +241,11 @@ public void onAuthenticationSuccess(...) {
 
 ### 🔧 트러블슈팅 — 분산 환경 OAuth state 실종
 
-**증상**: EC2 두 대 + nginx `least_conn` 환경에서 네이버 로그인 시 콜백 단계에서 에러 페이지로 이동.
+**💥 증상**: EC2 두 대 + nginx `least_conn` 환경에서 네이버 로그인 시 콜백 단계에서 에러 페이지로 이동.
 
-**원인**: Spring Security 기본 `HttpSessionOAuth2AuthorizationRequestRepository` 가 OAuth state 를 **JVM 메모리** 에 저장. 콜백이 다른 EC2 로 가면 state 매칭 실패.
+**🔍 원인**: Spring Security 기본 `HttpSessionOAuth2AuthorizationRequestRepository` 가 OAuth state 를 **JVM 메모리** 에 저장. 콜백이 다른 EC2 로 가면 state 매칭 실패.
 
-**해결**: `AuthorizationRequestRepository` 를 직접 구현해 state 를 **HttpOnly + Secure 쿠키** 에 저장.
+**🛠️ 해결**: `AuthorizationRequestRepository` 를 직접 구현해 state 를 **HttpOnly + Secure 쿠키** 에 저장.
 
 ```java
 @Override
@@ -221,7 +274,7 @@ SecurityConfig 에 등록:
 )
 ```
 
-**결과**: `STATELESS` 유지하면서 어떤 EC2 가 콜백 받아도 쿠키에서 state 복원. ip_hash 같은 우회 없이 정석 해결.
+**✅ 결과**: `STATELESS` 유지하면서 어떤 EC2 가 콜백 받아도 쿠키에서 state 복원. ip_hash 같은 우회 없이 정석 해결.
 
 ---
 
@@ -364,11 +417,11 @@ function toggleTheme() {
 
 ### 🔧 트러블슈팅 — 다크 모드 채팅 버블이 네모 박스로 표시됨
 
-**증상**: 다크모드에서 채팅 말풍선이 둥근 형태가 아닌 사각형 보라색 박스로 보임.
+**💥 증상**: 다크모드에서 채팅 말풍선이 둥근 형태가 아닌 사각형 보라색 박스로 보임.
 
-**원인**: `.bd-chat-bubble--self` (그리드 컨테이너)에 잘못 `background-color: accent` 가 적용됨. 둥근 모서리(`border-radius`)는 자식 `.bd-chat-bubble__body` 에만 있는데 컨테이너에 색이 칠해져 바깥 영역까지 보라색이 번짐.
+**🔍 원인**: `.bd-chat-bubble--self` (그리드 컨테이너)에 잘못 `background-color: accent` 가 적용됨. 둥근 모서리(`border-radius`)는 자식 `.bd-chat-bubble__body` 에만 있는데 컨테이너에 색이 칠해져 바깥 영역까지 보라색이 번짐.
 
-**해결**: 컨테이너 배경을 `transparent` 로 변경, 색상은 `__body` 에만 유지.
+**🛠️ 해결**: 컨테이너 배경을 `transparent` 로 변경, 색상은 `__body` 에만 유지.
 
 ```css
 :root[data-theme="dark"] .bd-chat-bubble--self {
@@ -423,11 +476,11 @@ stompClient.connect({}, () => {
 
 ### 🔧 트러블슈팅 1 — 분산 환경에서 메시지가 다른 EC2 사용자에게 안 감
 
-**증상**: User A (EC2 #1) 가 보낸 메시지가 같은 방의 User B (EC2 #2) 에게 도달하지 않음.
+**💥 증상**: User A (EC2 #1) 가 보낸 메시지가 같은 방의 User B (EC2 #2) 에게 도달하지 않음.
 
-**원인**: `SimpleBroker` 는 JVM 인메모리. 인스턴스 간 메시지 공유 불가.
+**🔍 원인**: `SimpleBroker` 는 JVM 인메모리. 인스턴스 간 메시지 공유 불가.
 
-**해결**: **RabbitMQ Fanout Exchange** 도입. 메시지를 `RabbitTemplate.convertAndSend()` 로 발행하면 모든 인스턴스의 `@RabbitListener` 가 수신 후 각자 자기 WebSocket 구독자에게 broadcast.
+**🛠️ 해결**: **RabbitMQ Fanout Exchange** 도입. 메시지를 `RabbitTemplate.convertAndSend()` 로 발행하면 모든 인스턴스의 `@RabbitListener` 가 수신 후 각자 자기 WebSocket 구독자에게 broadcast.
 
 ```java
 @Configuration
@@ -471,11 +524,11 @@ public void onRelay(ChatRelayMessage relay) {
 
 ### 🔧 트러블슈팅 2 — 메시지 50개 초과 시 화면 미표시
 
-**증상**: 채팅 메시지가 50개 넘어가면 새로 들어온 메시지가 안 보임.
+**💥 증상**: 채팅 메시지가 50개 넘어가면 새로 들어온 메시지가 안 보임.
 
-**원인**: 매퍼가 `ORDER BY created_datetime ASC LIMIT 50` 으로 가장 오래된 50개만 반환. 클라이언트도 항상 page 0 호출.
+**🔍 원인**: 매퍼가 `ORDER BY created_datetime ASC LIMIT 50` 으로 가장 오래된 50개만 반환. 클라이언트도 항상 page 0 호출.
 
-**해결 1**: 매퍼를 `DESC` 로 변경 → 최신 50개를 가져오고 서비스에서 reverse.
+**🛠️ 해결 1**: 매퍼를 `DESC` 로 변경 → 최신 50개를 가져오고 서비스에서 reverse.
 
 ```java
 List<MessageResponseDTO> messages = messageDAO.findByRoomId(roomId, memberId, page * 50, 50);
@@ -483,7 +536,7 @@ Collections.reverse(messages);   // 화면은 시간순
 return messages;
 ```
 
-**해결 2**: 클라이언트에 무한 스크롤 페이징 추가. 스크롤이 최상단 근처(80px 이내) 도달 시 page++ 호출 후 prepend, 스크롤 위치 보존.
+**🛠️ 해결 2**: 클라이언트에 무한 스크롤 페이징 추가. 스크롤이 최상단 근처(80px 이내) 도달 시 page++ 호출 후 prepend, 스크롤 위치 보존.
 
 ```javascript
 function loadMoreMessages() {
@@ -512,11 +565,11 @@ messagesNode.addEventListener('scroll', () => {
 
 ### 🔧 트러블슈팅 3 — 실시간 broadcast 가 페이징 상태를 망가뜨림
 
-**증상**: 옛 메시지 페이징해서 보고 있는 중 새 메시지가 오면 전체 reload 되어 page 0 으로 돌아감.
+**💥 증상**: 옛 메시지 페이징해서 보고 있는 중 새 메시지가 오면 전체 reload 되어 page 0 으로 돌아감.
 
-**원인**: `handleRealtimeEvent` 가 새 이벤트 받을 때마다 `loadMessages` 로 전체 재호출.
+**🔍 원인**: `handleRealtimeEvent` 가 새 이벤트 받을 때마다 `loadMessages` 로 전체 재호출.
 
-**해결**: broadcast 페이로드를 직접 활용. `CREATED` 는 append, `UPDATED`/`DELETED`/`LIKED` 는 in-place replace.
+**🛠️ 해결**: broadcast 페이로드를 직접 활용. `CREATED` 는 append, `UPDATED`/`DELETED`/`LIKED` 는 in-place replace.
 
 ```javascript
 function handleRealtimeEvent(event) {
@@ -639,12 +692,12 @@ drop.addEventListener('drop', e => {
 
 ### 🔧 트러블슈팅 — 두 워크스페이스 사이에서 검증 페이지가 사라져 있었음
 
-**증상**: 분명히 만들었던 `/watermark/verify` 페이지가 현재 워크스페이스에 없음.
+**💥 증상**: 분명히 만들었던 `/watermark/verify` 페이지가 현재 워크스페이스에 없음.
 
-**원인**: 프로젝트가 두 워크스페이스로 갈라져있었고 (`aws/workspace/bideo`, `spring/workspace/bideo`),
+**🔍 원인**: 프로젝트가 두 워크스페이스로 갈라져있었고 (`aws/workspace/bideo`, `spring/workspace/bideo`),
 검증 페이지는 후자에만 있었음. 메인 작업이 전자로 옮겨오면서 미동기화.
 
-**해결**: 컨트롤러 / HTML / CSS / JS 를 복사하면서 호환성 조정:
+**🛠️ 해결**: 컨트롤러 / HTML / CSS / JS 를 복사하면서 호환성 조정:
 - 구버전이 의존하던 `tbl_work_file.file_hash` 컬럼 — 우리 워크스페이스엔 없어서 **해시 fallback 분기 제거**.
   FastAPI extract 결과만 사용.
 - 구버전 verify.html 의 `yt-shell__page-content` → 우리 워크스페이스 컨벤션 `bd-shell__page-content` 로 클래스명 통일.
@@ -695,11 +748,11 @@ public void createNotification(Long memberId, Long senderId, String notiType,
 
 ### 🔧 트러블슈팅 — "거래만 해도 '새로운 주문이 접수되었습니다'"
 
-**증상**: 구매자가 결제 안 끝낸 단계(주문 생성 = `PENDING_PAYMENT`) 부터 판매자에게 "새로운 주문이 접수되었습니다" 알림이 발송. 결제 실패 / 환불 시에도 알림은 그대로 남아 노이즈.
+**💥 증상**: 구매자가 결제 안 끝낸 단계(주문 생성 = `PENDING_PAYMENT`) 부터 판매자에게 "새로운 주문이 접수되었습니다" 알림이 발송. 결제 실패 / 환불 시에도 알림은 그대로 남아 노이즈.
 
-**원인**: `OrderService.create` 마지막에 무조건 `notificationService.createNotification(..., "새로운 주문이 접수되었습니다.")` 호출.
+**🔍 원인**: `OrderService.create` 마지막에 무조건 `notificationService.createNotification(..., "새로운 주문이 접수되었습니다.")` 호출.
 
-**해결**:
+**🛠️ 해결**:
 1. **주문 생성 시점 알림 제거** — 결제 완료 전엔 알림 X
 2. **결제 완료 시점 알림에 작품 제목 포함** — `PaymentService.completePayment` 에서 `workDAO.findById(workId)` 로 title fetch 후 `"'○○' 작품이 판매되었습니다."`
 3. 알림 type 도 `PAYMENT` → **`SALE`** 로 의미 명확화
@@ -716,152 +769,36 @@ notificationService.createNotification(
 
 ### 🔧 트러블슈팅 — 다크모드 미적용 (알림 페이지 + 드롭다운)
 
-**증상**: 다크모드 토글해도 알림 항목 배경이 거의 흰색 그대로. unread 항목이 특히 튐.
+**💥 증상**: 다크모드 토글해도 알림 항목 배경이 거의 흰색 그대로. unread 항목이 특히 튐.
 
-**원인 1** (드롭다운, `shell.css`): unread 배경이 `color-mix(..., var(--bd-chat-accent) 6%, white)` — 다크에서도 흰색과 mix 라 거의 흰 배경.
+**🔍 원인 1** (드롭다운, `shell.css`): unread 배경이 `color-mix(..., var(--bd-chat-accent) 6%, white)` — 다크에서도 흰색과 mix 라 거의 흰 배경.
 
-**원인 2** (알림 페이지, `notification.css`): 자체 `:root` 변수만 라이트로 정의 + hardcoded `#fff` `#1f2937` 곳곳. `data-theme="dark"` 처리 없음.
+**🔍 원인 2** (알림 페이지, `notification.css`): 자체 `:root` 변수만 라이트로 정의 + hardcoded `#fff` `#1f2937` 곳곳. `data-theme="dark"` 처리 없음.
 
-**해결**: 두 CSS 파일 끝에 `:root[data-theme="dark"]` 오버라이드 추가.
+**🛠️ 해결**: 두 CSS 파일 끝에 `:root[data-theme="dark"]` 오버라이드 추가.
 - 드롭다운: hover 를 흰색 6%, unread 를 `color-mix(... accent 18%, var(--bd-color-bg))` 로
 - 페이지: `--bg/--surface/--line/--text/--muted` 다크 매핑 + 직접 색 박힌 셀렉터 (back-button / radio-mark / switch 등) 개별 오버라이드
 
 ---
 
-## 9. 공모전
-
-작가가 자기 작품으로 출품하는 콘테스트. 주최자가 마감 후 우승작 1개를 직접 선정하고, 그 다음날 자동 알림이 우승자에게 발송.
-
-### 라이프사이클 — `tbl_contest.status`
-
-```
-UPCOMING (예정) → OPEN (모집중) → CLOSED (마감) → RESULT (결과 발표)
-```
-
-주최자가 마감일 이후 출품작 중 1개를 "우승작 선정" 클릭 → `awardRank` 가 `"우승"` 으로 셋. 다음날 00:05 cron 이 `winnerNotifiedAt` NULL 인 우승작들 모아 알림 발송.
-
-### 상세 패널 (사이드 슬라이드)
-
-`/contest/list` 진입 → 카드 클릭 → 우측에 상세 패널이 슬라이드인. 페이지 이동 없이 카드 ↔ 상세 토글.
-
-패널 구성
-- 배너 / 제목 / 주최자 / 출품 수 / 조회 수 / 설명 / 상태 / 기간 / 상금 / 발표일 / 태그
-- **우승작 배너** (발표 후 모두에게 공개)
-- **출품작 그리드** (주최자에게만)
-- 액션 — 참가 신청 / 공유 / 신고
-
-### 주최자만 출품작 그리드 + 우승작 선정 버튼
-
-**프론트** (`contest-list.js`): `meta[name="bd-current-user-id"]` 와 `contest.memberId` 비교로 주최자 판단. 아니면 출품작 섹션 자체를 hidden, 우승작 배너만 별도 fetch.
-
-**백엔드** 도 같이 막음 — 직접 API 호출해도 비주최자에겐 우승작(`awardRank` 있음) 만 반환.
-
-```java
-// ContestController.apiEntries
-boolean isHost = userDetails != null && detail.getMemberId().equals(userDetails.getId());
-return isHost
-        ? ResponseEntity.ok(all)
-        : ResponseEntity.ok(all.stream().filter(e -> e.getAwardRank() != null).toList());
-```
-
-각 출품작 카드에 "우승작 선정" 버튼이 뜨는 조건 — 주최자 본인 ∧ 접수 마감 후 ∧ 미발표.
-
-### 우승작 선정 흐름
-
-```
-주최자가 카드의 "우승작 선정" 클릭
-   ↓
-POST /contest/api/{id}/winner  { entryId }
-   ↓
-ContestService.selectWinner
-  ├─ 권한 체크 (contest.memberId == memberId)
-  ├─ winnerNotifiedAt == null (이미 발표된 공모전 차단)
-  ├─ entryEnd 이후인지 확인
-  └─ updateContestWinner(contestId, entryId, "우승")
-   ↓
-화면: 패널 다시 로드 → 상단 우승작 배너 + 그리드 카드에 🏆 뱃지
-   ↓
-다음날 00:05 @Scheduled dispatchWinnerNotifications()
-   ↓
-우승자에게 "공모전 우승작으로 선정되었습니다." 알림
-   ↓
-markWinnerNotificationSent(contestId)  // winnerNotifiedAt 셋
-```
-
-### 🔧 트러블슈팅 — "참가 신청까진 되는데 그 뒤가 없음"
-
-**증상**: 출품 자체는 가능한데 출품작 보는 페이지, 우승작 선정 UI, 결과 발표 같은 게 모두 없어 보임.
-
-**원인**: 백엔드 서비스 메서드(`selectWinner`, `getContestEntryList`, `@Scheduled` 알림) 와 DB 컬럼(`winner_notified_at`, `award_rank`) 까지는 모두 만들어져 있었는데, **컨트롤러에 API 가 노출되지 않고 프론트 UI 도 비어있는 상태**였음. 백엔드만 만들고 표면이 빠진 케이스.
-
-**해결**:
-- 컨트롤러에 두 엔드포인트 추가 — `GET /contest/api/{id}/entries`, `POST /contest/api/{id}/winner`
-- 상세 패널 HTML 에 우승작 배너 + 출품작 그리드 마크업 추가
-- `contest-list.js` 에 `loadContestEntries(contest)` 추가 — entries fetch + 우승작 배너 + 카드 렌더 + 조건부 선정 버튼
-- 비주최자 노출 방지 — 프론트(섹션 hidden) + 백엔드(서비스 필터) 두 층
-
----
-
-## 10. 찜
-
-작품과 공모전 모두를 찜할 수 있는 다형성(polymorphic) 북마크. `tbl_bookmark` 한 테이블에 `target_type` + `target_id` 로 어떤 타입이든 저장.
-
-### API
-
-| 메소드 | URL | 동작 |
-|---|---|---|
-| POST | `/api/bookmarks` | `{ targetType, targetId }` 토글 (있으면 삭제 / 없으면 추가) → `{ bookmarked: true/false }` 반환 |
-| GET | `/api/bookmarks/my` | 본인 찜 목록 (작품/공모전 혼합) |
-| GET | `/api/bookmarks/check?targetType=&targetId=` | 단일 대상 찜 여부 |
-
-### 토글 동작 패턴
-
-작품 상세 / 공모전 상세 페이지의 찜 버튼이 같은 API 를 호출. UI 가 알아서 active 클래스 토글:
-
-```javascript
-// 공모전 상세 패널 — 찜 버튼
-bookmarkBtn.onclick = function () {
-    fetch("/api/bookmarks", {
-        method: "POST",
-        credentials: "same-origin",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ targetType: "CONTEST", targetId: data.id })
-    })
-    .then(r => r.json())
-    .then(result => {
-        data.isBookmarked = result.bookmarked;
-        updateBookmarkBtn(bookmarkBtn, result.bookmarked);
-    });
-};
-```
-
-같은 API 가 `targetType: "WORK"` 으로도 호출되어 작품 상세 페이지에서 재사용. 즉 새 타입(예: 갤러리)을 추가하더라도 API 시그니처는 그대로.
-
-### 내 찜 페이지 (`/wish`)
-
-본인 찜 목록을 작품·공모전 통합해서 그리드로. 사이드바 "보관함 → 찜한 작품" 에서 진입.
-
-### 정합성 — 알림 모듈과 연계
-
-찜 자체는 알림을 만들지 않지만, **찜한 작품이 등록자에 의해 판매되거나 경매 마감될 때** 찜한 사용자에게 푸시할 여지가 있음(현재 미구현). 이건 향후 마일스톤.
-
----
-
 ## 🎓 회고
 
-### 잘한 점
-- **분산 환경의 무상태성**을 정석으로 풀어냄 — OAuth state는 쿠키로, 메시지는 RabbitMQ Fanout 으로
-- **사용자 체감 품질** 신경 — 무한 스크롤의 스크롤 위치 보존, 다크모드 CSS 변수, 비동기 페이지 끊김 없음
-- **인프라까지 보고 해결** — Spring 코드만이 아니라 nginx 설정, AWS 보안그룹, Cloudflare 영역도 함께 운영
+맡은 **Frontend · 인증 · 실시간** 영역은 공통점이 하나 있었다 — 셋 다 단일 서버에서는 멀쩡하지만 **분산 환경(EC2 다중 인스턴스 + nginx)** 에 올리는 순간 무너지는 지점을 안고 있었다. 회고도 그 축으로 정리한다.
 
-### 아쉬운 점
-- **테스트 코드 부재** — JWT 필터·OAuth flow 같은 인증 로직은 통합 테스트가 꼭 필요
-- **WebSocket 부하 테스트 미실시** — 동시 채팅 1000명 같은 상황을 가정한 부하 테스트가 없음
+### 잘한 점
+- **분산 환경의 무상태성을 정석으로 풀어냄** — OAuth state 는 JVM 메모리 대신 HttpOnly 쿠키로, 채팅 메시지는 `SimpleBroker` 대신 RabbitMQ Fanout 으로. `ip_hash` 같은 우회 없이 `STATELESS` 를 유지한 채 해결했다.
+- **사용자 체감 품질에 집착** — 무한 스크롤의 스크롤 위치 보존, FOUC 없는 다크모드, 외부 추천 API 가 죽어도 페이지는 살아있는 graceful degradation 까지 "끊김 없는 화면" 을 우선순위에 뒀다.
+- **코드 너머 인프라까지 봄** — Spring 코드만이 아니라 nginx 설정, AWS 보안그룹, Cloudflare/TLS 인증서 영역까지 직접 만지며 문제를 끝까지 추적했다.
+
+### 아쉬운 점 & 향후 목표
+- **테스트 코드 부재** — JWT 필터·OAuth flow 같은 인증 로직은 회귀가 무서운 영역인데 통합 테스트가 없다. → 인증·메시징 핵심 경로부터 통합 테스트를 붙이는 것이 다음 목표.
+- **부하 테스트 미실시** — 동시 채팅 1,000명 같은 상황의 WebSocket·RabbitMQ 부하를 검증하지 못했다. → k6 / Gatling 으로 시나리오 부하 테스트를 돌려볼 계획.
+- **관찰 가능성(observability) 미흡** — 분산 환경 이슈를 주로 로그로 쫓았다. → 다음엔 메트릭·분산 추적(Actuator + Grafana 등) 을 먼저 깔고 시작하려 한다.
 
 ### 배운 점
-- **메모리에 있는 것은 모두 분산 환경의 적** — 세션·state·메시지 어느 것도 JVM 메모리에 두면 안 됨
-- **인프라 한 줄이 코드 100줄 보다 영향력 클 수 있다** — nginx `proxy_buffering off` 한 줄로 채팅 실시간 살아남, mkcert → Let's Encrypt 전환으로 OAuth 콜백 살아남
-- **사용자 흐름을 끝까지 따라가야 한다** — "메시지를 보낸다" 라는 한 액션 뒤에 직렬화·broker·구독자 분기·페이징 갱신 같은 7~8개 단계가 숨어있음
+- **메모리에 있는 것은 모두 분산 환경의 적** — 세션·state·메시지 어느 것도 JVM 메모리에 두면 인스턴스가 늘어나는 순간 깨진다.
+- **인프라 한 줄이 코드 100줄보다 영향력 클 수 있다** — nginx `proxy_buffering off` 한 줄로 채팅 실시간성이 살아났고, mkcert → Let's Encrypt 전환으로 OAuth 콜백이 살아났다.
+- **사용자 흐름을 끝까지 따라가야 한다** — "메시지를 보낸다" 라는 한 액션 뒤에 직렬화 · broker 중계 · 구독자 분기 · 페이징 갱신 같은 7~8 단계가 숨어 있었다.
 
 ---
 
